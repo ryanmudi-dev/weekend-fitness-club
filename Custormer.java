@@ -21,11 +21,11 @@ public class Custormer {
         this.currentBookings = new ArrayList<Booking>();
     }
 
-    public void addBooking(Booking booking) {
+    private void addBooking(Booking booking) {
         this.currentBookings.add(booking);
     }
 
-    public void removeBooking(Booking booking) {
+    private void removeBooking(Booking booking) {
         this.currentBookings.remove(booking);
     }
 }
