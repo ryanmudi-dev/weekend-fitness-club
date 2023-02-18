@@ -27,8 +27,12 @@ public class Lesson {
         return numberOfBookings;
     }
 
-    public void setNumberOfBookings(int numberOfBookings) {
-        this.numberOfBookings = numberOfBookings;
+    public void updateNumberOfBookings(String order) {
+        if (order.equals("increase")){
+            this.numberOfBookings += 1;
+        } else if (order.equals("decrease")) {
+            this.numberOfBookings -= 1;
+        }
     }
 
     public ArrayList<Rating> getReviews() {
@@ -44,13 +48,14 @@ public class Lesson {
         this.dateSlot = dateSlot;
         this.numberOfBookings = 0;
         this.reviews = new ArrayList<Rating>();
+        fitnessActivity.addSlot(dateSlot);
     }
 
-    private void addRating(Rating rating) {
+    public void addRating(Rating rating) {
         this.reviews.add(rating);
     }
 
-    private float calculateAverageRating(){
+    public float calculateAverageRating(){
         int sum = 0;
         for (Rating review : this.reviews) {
             sum += review.getRating();
@@ -59,6 +64,10 @@ public class Lesson {
             return (float) sum / (float) this.reviews.size();
         }
         return -1;
+    }
+
+    public boolean isFilled(){
+        return this.numberOfBookings >= this.CAPACITY;
     }
 
 }

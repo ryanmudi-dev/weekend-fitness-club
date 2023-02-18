@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class Custormer {
     private String customerName;
-    private ArrayList<Booking> currentBookings;
+    private ArrayList<Lesson> currentBookedLessons;
 
     public String getCustomerName() {
         return customerName;
@@ -12,20 +12,20 @@ public class Custormer {
         this.customerName = customerName;
     }
 
-    public ArrayList<Booking> getCurrentBookings() {
-        return currentBookings;
+    public ArrayList<Lesson> currentBookedLessons() {
+        return currentBookedLessons;
     }
 
     public Custormer(String name){
         this.customerName = name;
-        this.currentBookings = new ArrayList<Booking>();
+        this.currentBookedLessons = new ArrayList<Lesson>();
     }
 
-    private void addBooking(Booking booking) {
-        this.currentBookings.add(booking);
+    public void addLesson(Lesson lesson) {
+        this.currentBookedLessons.add(lesson);
     }
 
-    private void removeBooking(Booking booking) {
-        this.currentBookings.remove(booking);
+    public void removeLesson(Lesson lesson) {
+        this.currentBookedLessons.remove(lesson);
     }
 }

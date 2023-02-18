@@ -30,4 +30,8 @@ public class FitnessActivity {
     public ArrayList<String> getAvailableSlots() {
         return availableSlots;
     }
+
+    public void addSlot(String slot){
+        this.availableSlots.add(slot);
+    }
 }
