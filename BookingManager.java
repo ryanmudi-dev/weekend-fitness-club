@@ -39,14 +39,14 @@ public class BookingManager implements Serializable {
         bookingHashMap.remove(bookingId);
     }
 
-    public boolean cancelBooking(String bookingId){
+    public boolean cancelBooking(Booking booking){
         try{
-            Booking bookingToBeCancelled = bookingHashMap.get(bookingId);
-            bookingToBeCancelled.setStatus("cancelled");
-            Lesson lesson = bookingToBeCancelled.getLesson();
+            booking.setStatus("cancelled");
+            Lesson lesson = booking.getLesson();
 
-            bookingToBeCancelled.getCustormer().removeLesson(lesson);
+            booking.getCustormer().removeLesson(lesson);
             lesson.updateNumberOfBookings("decrease");
+            booking.getCustormer().removeLesson(booking.getLesson());
             return true;}
         catch (Exception e){
             return false;
@@ -82,6 +82,10 @@ public class BookingManager implements Serializable {
         oldLesson.updateNumberOfBookings("decrease");
         customer.removeLesson(oldLesson);
         customer.addLesson(newLesson);
+    }
+
+    public boolean verifyBookingId(Customer customer, String bookingId){
+        return this.bookingHashMap.containsKey(bookingId) && customer.currentBookedLessons().contains(this.bookingHashMap.get(bookingId).getLesson());
     }
 
 

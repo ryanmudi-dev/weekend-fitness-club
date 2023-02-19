@@ -11,6 +11,17 @@ public class CalenderManager implements Serializable {
     private final FitnessActivity zumba = new FitnessActivity("Zumba", 35);
     private final FitnessActivity aquacise = new FitnessActivity("Aquacise", 25);
 
+    public FitnessActivity getSpecificActivity(String name) {
+        return switch (name) {
+            case "Yoga" -> yoga;
+            case "Spin" -> spin;
+            case "Zumba" -> zumba;
+            case "Aquacise" -> aquacise;
+            default -> null;
+        };
+    }
+
+
     private ArrayList<FitnessActivity> allActivities = new ArrayList<>();
 
 
@@ -42,10 +53,10 @@ public class CalenderManager implements Serializable {
     public Lesson marchWeek4SunLesson2 = new Lesson(spin, "03040202");
 
 
-    public Lesson aprilWeek1SatLesson1 = new Lesson(yoga, "04010101");
+    public Lesson aprilWeek1SatLesson1 = new Lesson(aquacise, "04010101");
     public Lesson aprilWeek1SatLesson2 = new Lesson(spin, "04010102");
     public Lesson aprilWeek1SunLesson1 = new Lesson(zumba, "04010201");
-    public Lesson aprilWeek1SunLesson2 = new Lesson(aquacise, "04010202");
+    public Lesson aprilWeek1SunLesson2 = new Lesson(yoga, "04010202");
 
     public Lesson aprilWeek2SatLesson1 = new Lesson(yoga, "04020101");
     public Lesson aprilWeek2SatLesson2 = new Lesson(spin, "04020102");
@@ -123,7 +134,7 @@ public class CalenderManager implements Serializable {
        return fitnessActivity.getAvailableLessons();
     }
 
-    private ArrayList<String> convertLessonArrayToDateStringsArray(ArrayList<Lesson> lessonArray) {
+    public ArrayList<String> convertLessonArrayToDateStringsArray(ArrayList<Lesson> lessonArray) {
         ArrayList<String> dateSlotArray = new ArrayList<String>();
         for (Lesson currentLesson : lessonArray) {
             String dateSlot = currentLesson.getDateSlot();
@@ -139,7 +150,7 @@ public class CalenderManager implements Serializable {
             } else {
                 day = "Sunday";
             }
-            dateSlotArray.add("Week" + weekSlice + " of " + month + ": " + day + ", Session " + sessionOfTheDaySlice);
+            dateSlotArray.add("" + currentLesson.getFitnessActivity().getActivityName() + ": " + "Week" + weekSlice + " of " + month + ": " + day + ", Session " + sessionOfTheDaySlice);
         }
         return dateSlotArray;
     }
