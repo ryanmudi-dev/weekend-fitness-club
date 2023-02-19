@@ -3,12 +3,12 @@ import java.util.ArrayList;
 public class FitnessActivity {
     private String activityName;
     private float price;
-    private ArrayList<String> availableSlots;
+    private ArrayList<Lesson> availableLesson;
 
     public FitnessActivity(String activityName, float price) {
         this.activityName = activityName;
         this.price = price;
-        this.availableSlots = new ArrayList<String>();
+        this.availableLesson = new ArrayList<Lesson>();
     }
 
     public String getActivityName() {
@@ -27,14 +27,15 @@ public class FitnessActivity {
         this.price = price;
     }
 
-    public ArrayList<String> getAvailableSlots() {
-        return availableSlots;
+    public ArrayList<Lesson> getAvailableLessons() {
+        return availableLesson;
     }
 
-    public void addSlot(String slot){
-        this.availableSlots.add(slot);
+    public void addLesson(Lesson lesson){
+        this.availableLesson.add(lesson);
     }
-    public void removeSlot(String slot){
-        this.availableSlots.remove(slot);
+
+    public void removeLesson(Lesson lesson){
+        this.availableLesson.remove(lesson);
     }
 }

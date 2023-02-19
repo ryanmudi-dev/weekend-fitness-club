@@ -50,6 +50,8 @@ public class WFCApp implements Serializable {
             bookingManager.attendBookedLesson(this.currentCustomer, booking, customerRating);
         } else if(response == 2){
             System.out.println("Choose Option:\n[1] Change Booking\n[2] Cancel Booking\n[3] Exit");
+            int responseMod = scanner.nextInt();
+            if (responseMod == 1)
         }
     }
 

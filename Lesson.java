@@ -7,6 +7,7 @@ public class Lesson implements Serializable {
     final int CAPACITY = 5;
     private int numberOfBookings;
     private ArrayList<Rating> reviews;
+    private boolean isFilled;
 
     public FitnessActivity getFitnessActivity() {
         return fitnessActivity;
@@ -32,7 +33,16 @@ public class Lesson implements Serializable {
         if (order.equals("increase")){
             this.numberOfBookings += 1;
         } else if (order.equals("decrease")) {
+            if(isFilled()){
+                this.fitnessActivity.addLesson(this);
+            }
             this.numberOfBookings -= 1;
+        }
+        if (isFilled()){
+            this.isFilled = true;
+            this.fitnessActivity.removeLesson(this);
+        }else{
+            this.isFilled = false;
         }
     }
 
@@ -48,8 +58,9 @@ public class Lesson implements Serializable {
         this.fitnessActivity = fitnessActivity;
         this.dateSlot = dateSlot;
         this.numberOfBookings = 0;
+        this.isFilled = false;
         this.reviews = new ArrayList<Rating>();
-        fitnessActivity.addSlot(dateSlot);
+        fitnessActivity.addLesson(this);
     }
 
     public void addRating(Rating rating) {

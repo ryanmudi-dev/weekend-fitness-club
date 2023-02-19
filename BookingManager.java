@@ -70,7 +70,8 @@ public class BookingManager implements Serializable {
         booking.setStatus("attended");
         booking.setRating(rating);
         booking.getLesson().addRating(rating);
-        customer.removeLesson(booking.getLesson());
+        customer.removeLesson(booking.getLesson()); // Remove attended lesson from customer's current bookings
+        booking.getLesson().getFitnessActivity().removeLesson(booking.getLesson()); // Remove attended lesson from available lessons
     }
 
     public void changeBookedLesson(Customer customer, Booking booking, Lesson oldLesson, Lesson newLesson){
