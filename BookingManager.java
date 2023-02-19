@@ -1,8 +1,8 @@
-import java.util.Dictionary;
-import java.util.Hashtable;
+import java.io.Serializable;
+import java.util.HashMap;
 
-public class BookingManager {
-    private Dictionary<String, Booking> bookingsDict = new Hashtable<>();
+public class BookingManager implements Serializable {
+    private HashMap<String, Booking> bookingHashMap;
     private int lastBooking;
 
     public int getLastBooking() {
@@ -13,12 +13,12 @@ public class BookingManager {
         this.lastBooking = lastBooking;
     }
 
-    public Dictionary<String, Booking> getBookings() {
-        return bookingsDict;
+    public HashMap<String, Booking> getBookings() {
+        return bookingHashMap;
     }
 
-    public BookingManager(Dictionary<String, Booking> bookings) {
-        this.bookingsDict = bookings;
+    public BookingManager() {
+        this.bookingHashMap = new HashMap<>();
         this.lastBooking = 0;
     }
 
@@ -26,33 +26,62 @@ public class BookingManager {
         return "booking" + this.lastBooking + 1;
     }
 
-    public void registerBooking(Custormer custormer, Lesson lesson){
+    public String registerBooking(Customer customer, Lesson lesson){
         String newBookingId = bookingIdGenerator();
-        Booking newBooking = new Booking(newBookingId, custormer, lesson);
-        bookingsDict.put(newBookingId,newBooking);
+        Booking newBooking = new Booking(newBookingId, customer, lesson);
+        bookingHashMap.put(newBookingId,newBooking);
         this.lastBooking += 1;
+        return newBookingId;
 
     }
 
     public void removeBooking(String bookingId){
-        bookingsDict.remove(bookingId);
+        bookingHashMap.remove(bookingId);
     }
 
-    public void cancelBooking(String bookingId){
-        Booking bookingToBeCancelled = bookingsDict.get(bookingId);
-        bookingToBeCancelled.setStatus("cancelled");
+    public boolean cancelBooking(String bookingId){
+        try{
+            Booking bookingToBeCancelled = bookingHashMap.get(bookingId);
+            bookingToBeCancelled.setStatus("cancelled");
+            Lesson lesson = bookingToBeCancelled.getLesson();
 
-        Lesson lesson = bookingToBeCancelled.getLesson();
+            bookingToBeCancelled.getCustormer().removeLesson(lesson);
+            lesson.updateNumberOfBookings("decrease");
+            return true;}
+        catch (Exception e){
+            return false;
 
-        bookingToBeCancelled.getCustormer().removeLesson(lesson);
-        lesson.updateNumberOfBookings("decrease");
+        }
+
 
     }
 
-    public void attendBookedLesson(Custormer custormer, Booking booking, Rating rating){
+    public Booking getSpecificBooking(String bookingId){
+        try {
+            return bookingHashMap.get(bookingId);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public void attendBookedLesson(Customer customer, Booking booking, Rating rating){
+        /** Provide Customer, Booking and Rating Objects */
+
         booking.setStatus("attended");
         booking.setRating(rating);
         booking.getLesson().addRating(rating);
-        custormer.removeLesson(booking.getLesson());
+        customer.removeLesson(booking.getLesson());
     }
+
+    public void changeBookedLesson(Customer customer, Booking booking, Lesson oldLesson, Lesson newLesson){
+        /** Provide Customer, Booking, Old Lesson and the new Lesson Objects */
+        booking.setLesson(newLesson);
+        booking.setStatus("changed");
+        newLesson.updateNumberOfBookings("increase");
+        oldLesson.updateNumberOfBookings("decrease");
+        customer.removeLesson(oldLesson);
+        customer.addLesson(newLesson);
+    }
+
+
 }

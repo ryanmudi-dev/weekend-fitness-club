@@ -34,4 +34,7 @@ public class FitnessActivity {
     public void addSlot(String slot){
         this.availableSlots.add(slot);
     }
+    public void removeSlot(String slot){
+        this.availableSlots.remove(slot);
+    }
 }

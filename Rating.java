@@ -1,4 +1,6 @@
-public class Rating {
+import java.io.Serializable;
+
+public class Rating implements Serializable {
     private String review;
     private int rating;
 
@@ -21,5 +23,9 @@ public class Rating {
     public Rating (int rating, String review){
         this.rating = rating;
         this.review = review;
+    }
+    public Rating (int rating){
+        this.rating = rating;
+        this.review = "";
     }
 }

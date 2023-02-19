@@ -1,13 +1,15 @@
-public class Booking {
+import java.io.Serializable;
+
+public class Booking implements Serializable {
     private String bookingId;
-    private Custormer custormer;
+    private Customer customer;
     private Lesson lesson;
     private String status;
     private Rating rating;
 
-    public Booking(String bookingId, Custormer custormer, Lesson lesson) {
+    public Booking(String bookingId, Customer customer, Lesson lesson) {
         this.bookingId = bookingId;
-        this.custormer = custormer;
+        this.customer = customer;
         this.lesson = lesson;
         this.status = "booked";
     }
@@ -20,12 +22,12 @@ public class Booking {
         this.bookingId = bookingId;
     }
 
-    public Custormer getCustormer() {
-        return custormer;
+    public Customer getCustormer() {
+        return customer;
     }
 
-    public void setCustormer(Custormer custormer) {
-        this.custormer = custormer;
+    public void setCustormer(Customer customer) {
+        this.customer = customer;
     }
 
     public Lesson getLesson() {
