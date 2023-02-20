@@ -1,14 +1,14 @@
-import java.io.IOException;
-import java.io.Serializable;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class WFCApp implements Serializable {
-    Scanner scanner = new Scanner(System.in);
+    transient Scanner scanner = new Scanner(System.in);
     CalenderManager calenderManager = new CalenderManager();
     BookingManager bookingManager = new BookingManager();
     CustomersManager customersManager = new CustomersManager();
     private Customer currentCustomer = null;
+    private final static String filePath = "Serialization/appState.dat";
 
     public Customer getCurrentCustomer() {
         return currentCustomer;
@@ -37,7 +37,7 @@ public class WFCApp implements Serializable {
 
     }
 
-    public void manageBooking(Booking booking){
+    public void manageBooking(Booking booking) throws IOException {
         System.out.println("Enter An Option: [1] Attend Booking, [2] Modify Booking, [3] Exit App:");
         int response = scanner.nextInt();
         if(response == 3){
@@ -67,11 +67,13 @@ public class WFCApp implements Serializable {
         }
     }
 
-    public void exitApp(){
+    public void exitApp() throws IOException {
+        this.saveWfcAppState();
+        System.out.println("Thank you, and hope you will be back soon");
         System.exit(0);
     }
 
-    public Lesson chooseLesson(){
+    public Lesson chooseLesson() throws IOException {
         /** Lists all available lessons and return selected lesson */
 
         System.out.println("Please select how you wan to view the available lessons.\nEnter an Option:[1] View by Day of the Week, [2] View by Fitness Activity:");
@@ -120,15 +122,41 @@ public class WFCApp implements Serializable {
         return availableLessons.get(responseView-1);
     }
 
-    public void bookALesson(){
+    public void bookALesson() throws IOException {
         String newBookingID = bookingManager.registerBooking(this.currentCustomer, chooseLesson());
         System.out.println("Your New Booking ID is '" + newBookingID + "', Please keep this as you would need it to manage your booking\n");
+    }
+
+    public void saveWfcAppState() throws IOException{
+        try{
+            FileOutputStream fos = new FileOutputStream(filePath);
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(this);
+            oos.close();
+            fos.close();
+        } catch(Exception e) {
+            System.out.println(e);
+        }
     }
 
     public static void main(String[] args) throws IOException {
 
         Scanner mainScanner = new Scanner(System.in);
-        WFCApp wfcApp = new WFCApp();
+        WFCApp wfcApp = null;
+        try{
+             FileInputStream fis = new FileInputStream(filePath);
+             ObjectInputStream ois = new ObjectInputStream(fis);
+
+            wfcApp = (WFCApp) ois.readObject();
+            ois.close();
+            fis.close();
+        } catch(FileNotFoundException | ClassNotFoundException e) {
+            wfcApp = new WFCApp();
+            System.out.println(e);
+        } finally {
+            assert wfcApp != null;
+            wfcApp.scanner = new Scanner(System.in);
+        }
 
         //________________________________________________Start_____________________________________________________//
         System.out.println("Are you a new user or a registered user?");

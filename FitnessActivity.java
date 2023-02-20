@@ -1,6 +1,7 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class FitnessActivity {
+public class FitnessActivity implements Serializable {
     private String activityName;
     private float price;
     private ArrayList<Lesson> availableLesson;

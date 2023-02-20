@@ -15,40 +15,8 @@ public class CustomersManager implements Serializable{
                 '}';
     }
 
-    private static final long serialVersionUID = 1L;
-    private final static String filePath = "Serialization/customers.dat";
-
-
-    public CustomersManager() throws IOException {
-        try{
-             FileInputStream fis = new FileInputStream(filePath);
-             ObjectInputStream ois = new ObjectInputStream(fis);
-
-            this.customers = (HashMap<String, Customer>) ois.readObject();
-            ois.close();
-            fis.close();
-        } catch(Exception e) {
-//            FileOutputStream fos = new FileOutputStream(filePath);
-//            ObjectOutputStream oos = new ObjectOutputStream(fos);
-//            oos.writeObject(customers);
-//            oos.close();
-//            fos.close();
-        System.out.println(e);
-        }
-
-
-
-    }
-
-    public void saveCustomersData() throws IOException{
-        try{FileOutputStream fos = new FileOutputStream(filePath);
-            ObjectOutputStream oos = new ObjectOutputStream(fos);
-            oos.writeObject(this.customers);
-            oos.close();
-            fos.close();
-        } catch(Exception e) {
-            System.out.println(e);
-        }
+    public CustomersManager(){
+    this.customers = new HashMap<>();
     }
 
     public boolean registerNewCustomer(String firstName, String lastName){
