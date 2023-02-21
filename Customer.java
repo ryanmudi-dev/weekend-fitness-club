@@ -2,10 +2,27 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Customer implements Serializable {
-    private static final long serialVersionUID = 1L;
 
     private String customerName;
+    private String customerEmailAddress;
     private ArrayList<Lesson> currentBookedLessons;
+
+    public String getEmailAddress() {
+        return customerEmailAddress;
+    }
+
+    public void setEmailAddress(String emailAddress) {
+        this.customerEmailAddress = emailAddress;
+    }
+
+    public ArrayList<Lesson> getCurrentBookedLessons() {
+        return currentBookedLessons;
+    }
+
+    public void setCurrentBookedLessons(ArrayList<Lesson> currentBookedLessons) {
+        this.currentBookedLessons = currentBookedLessons;
+    }
+
 
     public String getCustomerName() {
         return customerName;
@@ -19,8 +36,9 @@ public class Customer implements Serializable {
         return currentBookedLessons;
     }
 
-    public Customer(String name){
+    public Customer(String name, String emailAddress){
         this.customerName = name;
+        this.customerEmailAddress = emailAddress;
         this.currentBookedLessons = new ArrayList<Lesson>();
     }
 

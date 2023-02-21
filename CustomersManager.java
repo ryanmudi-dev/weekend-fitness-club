@@ -19,9 +19,11 @@ public class CustomersManager implements Serializable{
     this.customers = new HashMap<>();
     }
 
-    public boolean registerNewCustomer(String firstName, String lastName){
-        Customer newCustomer = new Customer(firstName + " " + lastName);
-        String customerKey = firstName.toLowerCase() + lastName.toLowerCase();
+    public boolean registerNewCustomer(String firstName, String lastName, String emailAddress){
+        String firstNameTitle = firstName.substring(0,1).toUpperCase() + firstName.substring(1);
+        String lastNameTitle = lastName.substring(0,1).toUpperCase() + lastName.substring(1);
+        Customer newCustomer = new Customer(firstNameTitle + " " + lastNameTitle, emailAddress);
+        String customerKey = emailAddress.toLowerCase();
         if(this.customers.containsKey(customerKey)){
             return false;
         }else{
@@ -31,9 +33,9 @@ public class CustomersManager implements Serializable{
 
     }
 
-    public Customer getSpecificCustomer(String firstName, String lastName){
+    public Customer getSpecificCustomer(String emailAddress){
         /** Provide First Name and Last Name to return Customer Object **/
-        String customerKey = firstName.toLowerCase() + lastName.toLowerCase();
+        String customerKey = emailAddress.toLowerCase();
         try {
             return this.customers.get(customerKey);
         } catch (Exception e){

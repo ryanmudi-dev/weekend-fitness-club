@@ -23,13 +23,14 @@ public class BookingManager implements Serializable {
     }
 
     private String bookingIdGenerator(){
-        return "booking" + this.lastBooking + 1;
+        return "booking" + (int)(this.lastBooking + 1);
     }
 
     public String registerBooking(Customer customer, Lesson lesson){
         String newBookingId = bookingIdGenerator();
         Booking newBooking = new Booking(newBookingId, customer, lesson);
         bookingHashMap.put(newBookingId,newBooking);
+        customer.addLesson(lesson);
         this.lastBooking += 1;
         return newBookingId;
 

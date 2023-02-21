@@ -11,7 +11,7 @@ public class WFCApp implements Serializable {
     private final static String filePath = "Serialization/appState.dat";
 
     public Customer getCurrentCustomer() {
-        return currentCustomer;
+        return this.currentCustomer;
     }
 
     public void setCurrentCustomer(Customer currentCustomer) {
@@ -26,21 +26,24 @@ public class WFCApp implements Serializable {
         String firstName = scanner.next();
         System.out.println("Enter Last Name");
         String lastName = scanner.next();
-        boolean registrationSuccessful = customersManager.registerNewCustomer(firstName, lastName);
+        System.out.println("Enter Email Address");
+        String emailAddress = scanner.next();
+        boolean registrationSuccessful = this.customersManager.registerNewCustomer(firstName, lastName, emailAddress);
         if (registrationSuccessful){
             System.out.println("Customer data created successfully");
         } else{
             System.out.println("You already have an account registered");
         }
-        this.setCurrentCustomer(customersManager.getSpecificCustomer(firstName, lastName));
+        this.setCurrentCustomer(this.customersManager.getSpecificCustomer(emailAddress));
+        System.out.println("Welcome " + this.currentCustomer.getCustomerName());
 
 
     }
 
     public void manageBooking(Booking booking) throws IOException {
-        System.out.println("Enter An Option: [1] Attend Booking, [2] Modify Booking, [3] Exit App:");
+        System.out.println("Enter An Option:\n[1] Attend Booking\n[2] Modify Booking\n[0] Exit App");
         int response = scanner.nextInt();
-        if(response == 3){
+        if(response == 0){
             this.exitApp();
         }else if (response == 1){
             System.out.println("Thank You for attending this lesson. Please kindly drop a review:");
@@ -50,62 +53,57 @@ public class WFCApp implements Serializable {
             Scanner stringScanner = new Scanner(System.in);
             String review = stringScanner.nextLine();
             Rating customerRating = new Rating(rating, review);
-            bookingManager.attendBookedLesson(this.currentCustomer, booking, customerRating);
+            this.bookingManager.attendBookedLesson(this.currentCustomer, booking, customerRating);
             System.out.println("Thank You for sharing your feedback\n");
         } else if(response == 2){
-            System.out.println("Enter an Option:\n[1] Change Booking, [2] Cancel Booking, [3] Exit App:");
+            System.out.println("Enter an Option:\n[1] Change Booking\n[2] Cancel Booking\n[0] Exit App");
             int responseMod = scanner.nextInt();
-            if(responseMod == 3){
+            if(responseMod == 0){
                 this.exitApp();
             }else if (responseMod == 1){
                 System.out.println("Please select the lesson you want to change the booking to.");
-                bookingManager.changeBookedLesson(this.currentCustomer, booking, booking.getLesson(), chooseLesson());
+                this.bookingManager.changeBookedLesson(this.currentCustomer, booking, booking.getLesson(), chooseLesson());
                 System.out.println("Your Booking has been changed successfully.\n");
             } else if(responseMod == 2){
-                bookingManager.cancelBooking(booking);
+                this.bookingManager.cancelBooking(booking);
             }
         }
     }
 
-    public void exitApp() throws IOException {
-        this.saveWfcAppState();
-        System.out.println("Thank you, and hope you will be back soon");
-        System.exit(0);
-    }
 
     public Lesson chooseLesson() throws IOException {
         /** Lists all available lessons and return selected lesson */
 
-        System.out.println("Please select how you wan to view the available lessons.\nEnter an Option:[1] View by Day of the Week, [2] View by Fitness Activity:");
+        System.out.println("Please select how you want to view the available lessons.\nEnter an Option\n[1] View by Day of the Week\n[2] View by Fitness Activity");
         int responseView = scanner.nextInt();
         ArrayList<Lesson> availableLessons = null;
         if (responseView == 1) {
-            System.out.println("Enter an Option: [1] Saturday, [2] Sunday\n");
+            System.out.println("Enter an Option:\n[1] Saturday\n[2] Sunday");
             responseView = scanner.nextInt();
             if(responseView == 1){
-                availableLessons = calenderManager.getAvailableLessons("Saturday");
+                availableLessons = this.calenderManager.getAvailableLessons("Saturday");
             } else if (responseView == 2){
-                availableLessons = calenderManager.getAvailableLessons("Sunday");
+                availableLessons = this.calenderManager.getAvailableLessons("Sunday");
             }
 
         } else if (responseView == 2){
-            System.out.println("Enter an Option: [1] Yoga, [2] Spin, [3] Zumba, [4] Aquacise, [5] Exit App:");
+            System.out.println("Enter an Option:\n[1] Yoga\n[2] Spin\n[3] Zumba\n[4] Aquacise\n[0] Exit App");
             responseView = scanner.nextInt();
             if (responseView == 1){
-                availableLessons = calenderManager.getAvailableLessons(calenderManager.getSpecificActivity("Yoga"));
+                availableLessons = this.calenderManager.getAvailableLessons(this.calenderManager.getSpecificActivity("Yoga"));
             } else if (responseView == 2){
-                availableLessons = calenderManager.getAvailableLessons(calenderManager.getSpecificActivity("Spin"));
+                availableLessons = this.calenderManager.getAvailableLessons(this.calenderManager.getSpecificActivity("Spin"));
         } else if (responseView == 3){
-                availableLessons = calenderManager.getAvailableLessons(calenderManager.getSpecificActivity("Zumba"));
+                availableLessons = this.calenderManager.getAvailableLessons(this.calenderManager.getSpecificActivity("Zumba"));
         } else if (responseView == 4) {
-                availableLessons = calenderManager.getAvailableLessons(calenderManager.getSpecificActivity("Aquacise"));
-            } else if(responseView == 5){
+                availableLessons = this.calenderManager.getAvailableLessons(this.calenderManager.getSpecificActivity("Aquacise"));
+            } else if(responseView == 0){
                 this.exitApp();
             }
 
         }
         assert availableLessons != null;
-        ArrayList<String> printableLessons = calenderManager.convertLessonArrayToDateStringsArray(availableLessons);
+        ArrayList<String> printableLessons = this.calenderManager.convertLessonArrayToDateStringsArray(availableLessons);
         do {
             System.out.println("Please select a Lesson");
             for (int i = 0; i < printableLessons.size(); i++){
@@ -123,7 +121,7 @@ public class WFCApp implements Serializable {
     }
 
     public void bookALesson() throws IOException {
-        String newBookingID = bookingManager.registerBooking(this.currentCustomer, chooseLesson());
+        String newBookingID = this.bookingManager.registerBooking(this.currentCustomer, chooseLesson());
         System.out.println("Your New Booking ID is '" + newBookingID + "', Please keep this as you would need it to manage your booking\n");
     }
 
@@ -139,10 +137,37 @@ public class WFCApp implements Serializable {
         }
     }
 
-    public static void main(String[] args) throws IOException {
+    public void signInRegisteredUser(){
+        Customer returningCustomer;
+        do {
+            System.out.println("Enter Your Email");
+            String emailAddress = scanner.next();
+            returningCustomer = this.customersManager.getSpecificCustomer(emailAddress);
+        } while(returningCustomer == null);
 
+        this.setCurrentCustomer(returningCustomer);
+        System.out.println("Welcome back " + this.getCurrentCustomer().getCustomerName());
+
+    }
+//
+    public void signOutCurrentUser(){
+        this.setCurrentCustomer(null);
+    }
+
+    public void exitApp() throws IOException {
+        if (this.getCurrentCustomer() != null){
+            System.out.println("Thank you " + this.getCurrentCustomer().getCustomerName() + ", and hope you will be back soon");
+            this.signOutCurrentUser();
+        } else{
+            System.out.println("Thank you, and hope you will be back soon");
+        }
+        this.saveWfcAppState();
+        System.exit(0);
+    }
+
+    public static void main(String[] args) throws IOException {
         Scanner mainScanner = new Scanner(System.in);
-        WFCApp wfcApp = null;
+        WFCApp wfcApp = new WFCApp();
         try{
              FileInputStream fis = new FileInputStream(filePath);
              ObjectInputStream ois = new ObjectInputStream(fis);
@@ -151,26 +176,26 @@ public class WFCApp implements Serializable {
             ois.close();
             fis.close();
         } catch(FileNotFoundException | ClassNotFoundException e) {
-            wfcApp = new WFCApp();
             System.out.println(e);
         } finally {
-            assert wfcApp != null;
             wfcApp.scanner = new Scanner(System.in);
         }
 
         //________________________________________________Start_____________________________________________________//
         System.out.println("Are you a new user or a registered user?");
-        System.out.println("Enter an Option: [1] New User, [2] Registered User, [3] Exit App:");
+        System.out.println("Enter an Option:\n[1] New User\n[2] Registered User\n[0] Exit App");
         int mainUserResponse = mainScanner.nextInt();
-        if (mainUserResponse == 3){
+        if (mainUserResponse == 0){
             wfcApp.exitApp();
         } else if (mainUserResponse == 1){
             wfcApp.newUserRegister();
+        } else if(mainUserResponse == 2){
+            wfcApp.signInRegisteredUser();
         }
 
         while(true){
-        System.out.println("Would you like to book a new lesson or manage an already booked lesson");
-        System.out.println("Enter an Option: [1] Book New Lesson, [2] Manage current Booking, [3] Exit App:");
+        System.out.println("Would you like to book a new lesson or manage an already booked lesson?");
+        System.out.println("Enter an Option:\n[1] Book New Lesson\n[2] Manage current Booking\n[0] Exit App");
         int customerResponse = mainScanner.nextInt();
         if (customerResponse == 1){
             wfcApp.bookALesson();
@@ -182,14 +207,14 @@ public class WFCApp implements Serializable {
                 bookingID = mainStringScanner.next();
                 if(bookingID.toLowerCase().equals("exit")){
                     wfcApp.exitApp();
-                } else if (!wfcApp.bookingManager.verifyBookingId(wfcApp.currentCustomer, bookingID)){
+                } else if (!wfcApp.bookingManager.verifyBookingId(wfcApp.getCurrentCustomer(), bookingID.toLowerCase())){
                     System.out.println("The Booking ID you entered is incorrect or This booking does not belong to this user.\nPlease enter a correct ID or type 'Exit' to exit the App:");
                 }
-            } while (!wfcApp.bookingManager.verifyBookingId(wfcApp.currentCustomer, bookingID));
+            } while (!wfcApp.bookingManager.verifyBookingId(wfcApp.getCurrentCustomer(), bookingID));
 
             Booking currentBooking = wfcApp.bookingManager.getSpecificBooking(bookingID);
             wfcApp.manageBooking(currentBooking);
-        } else if(customerResponse == 3){
+        } else if(customerResponse == 0){
             wfcApp.exitApp();
         }
 
@@ -198,5 +223,10 @@ public class WFCApp implements Serializable {
 
 
     }
+
     }
+
+
+
+
 }
