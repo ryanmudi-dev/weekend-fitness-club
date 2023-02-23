@@ -207,25 +207,6 @@ public class AppManagerDemo implements Serializable {
         System.exit(0);
     }
 
-//    public static void main(String[] args) throws IOException {
-//        Scanner mainScanner = new Scanner(System.in);
-//        WFCApp wfcApp = new WFCApp();
-//        try{
-//            FileInputStream fis = new FileInputStream(filePath);
-//            ObjectInputStream ois = new ObjectInputStream(fis);
-//
-//            wfcApp = (WFCApp) ois.readObject();
-//            ois.close();
-//            fis.close();
-//        } catch(FileNotFoundException | ClassNotFoundException e) {
-//            System.out.println(e);
-//        } finally {
-//            wfcApp.scanner = new Scanner(System.in);
-//        }
-//
-//        //________________________________________________Start_____________________________________________________//
-//
-//    }
 
     public void fullAppLogic() throws IOException {
         Scanner mainScanner = new Scanner(System.in);
