@@ -63,39 +63,56 @@ public class AppManagerDemo implements Serializable {
             this.bookingManager.attendBookedLesson(this.currentCustomer, booking, customerRating);
             System.out.println("Thank You for sharing your feedback\n");
         } else if(response == 2){
-            System.out.println("Enter an Option:\n[1] Change Booking\n[2] Cancel Booking\n[-1] Go Back\n[0] Exit App");
-            int responseMod = scanner.nextInt();
-            if(responseMod == 0){
-                this.exitApp();
-            }else if(responseMod == -1){
-                this.manageBooking(booking);
-            }else if (responseMod == 1){
-                System.out.println("Please select the lesson you want to change the booking to.");
-                this.bookingManager.changeBookedLesson(this.currentCustomer, booking, booking.getLesson(), chooseLesson());
-                System.out.println("Your Booking has been changed successfully.\n");
-            } else if(responseMod == 2){
-                this.bookingManager.cancelBooking(booking);
-            }
+            boolean continueManage = true;
+            do{
+                System.out.println("Enter an Option:\n[1] Change Booking\n[2] Cancel Booking\n[-1] Go Back\n[0] Exit App");
+                int responseMod = scanner.nextInt();
+                if(responseMod == 0){
+                    this.exitApp();
+                }else if(responseMod == -1){
+                    continueManage = false;
+                    this.manageBooking(booking);
+
+                }else if (responseMod == 1){
+                    System.out.println("Please select the lesson you want to change the booking to.");
+                    System.out.println("Please select how you want to view the available lessons.\nEnter an Option\n[1] View by Day of the Week\n[2] View by Fitness Activity\n[-1] Go Back");
+                    int responseView = scanner.nextInt();
+                    if (responseView != -1){
+                        continueManage = false;
+                        this.bookingManager.changeBookedLesson(this.currentCustomer, booking, booking.getLesson(), chooseLesson(responseView, false));
+                        System.out.println("Your Booking has been changed successfully.\n");
+                    }
+
+                } else if(responseMod == 2){
+                    this.bookingManager.cancelBooking(booking);
+                    System.out.println("Your Booking has been cancelled successfully!\n");
+                    continueManage = false;
+                }
+            } while(continueManage);
+
         }
     }
 
 
-    public Lesson chooseLesson() throws IOException {
-        /** Lists all available lessons and return selected lesson */
+    public Lesson chooseLesson(int responseView, boolean calledFromWithin) throws IOException {
+        /** Lists all available lessons and return selected lesson given a response*/
+        if (calledFromWithin){
+            System.out.println("Please select how you want to view the available lessons.\nEnter an Option\n[1] View by Day of the Week\n[2] View by Fitness Activity\n[-1] Go Back");
+            responseView = scanner.nextInt();
+        }
 
-        System.out.println("Please select how you want to view the available lessons.\nEnter an Option\n[1] View by Day of the Week\n[2] View by Fitness Activity\n[-1] Go Back");
-        int responseView = scanner.nextInt();
+
 //        if (responseView == -1){
 //
 //        }
+        int temp = responseView + 0;
         ArrayList<Lesson> availableLessons = null;
         if (responseView == 1) {
             System.out.println("Enter an Option:\n[1] Saturday\n[2] Sunday\n[-1] Go Back\n[0] Exit App");
             responseView = scanner.nextInt();
 
             if(responseView == -1){
-
-                return this.chooseLesson();
+                return this.chooseLesson(temp, true);
             }else if(responseView == 0){
                 this.exitApp();
             } else if(responseView == 1){
@@ -108,7 +125,7 @@ public class AppManagerDemo implements Serializable {
             System.out.println("Enter an Option:\n[1] Yoga\n[2] Spin\n[3] Zumba\n[4] Aquacise\n[-1] Go Back\n[0] Exit App");
             responseView = scanner.nextInt();
             if(responseView == -1){
-                return this.chooseLesson();
+                return this.chooseLesson(temp, true);
             }else if (responseView == 1){
                 availableLessons = this.calenderManager.getAvailableLessons(this.calenderManager.getSpecificActivity("Yoga"));
             } else if (responseView == 2){
@@ -140,8 +157,8 @@ public class AppManagerDemo implements Serializable {
         return availableLessons.get(responseView-1);
     }
 
-    public void bookALesson() throws IOException {
-        String newBookingID = this.bookingManager.registerBooking(this.currentCustomer, this.chooseLesson());
+    public void bookALesson(int customerResponse) throws IOException {
+        String newBookingID = this.bookingManager.registerBooking(this.currentCustomer, this.chooseLesson(customerResponse, false));
         System.out.println("Your New Booking ID is '" + newBookingID + "', Please keep this as you would need it to manage your booking\n");
     }
 
@@ -215,40 +232,50 @@ public class AppManagerDemo implements Serializable {
 
         System.out.println("Enter an Option:\n[1] New User\n[2] Registered User\n[0] Exit App");
         int mainUserResponse = mainScanner.nextInt();
-        if (mainUserResponse == 0){
+        if (mainUserResponse == 0) {
             this.exitApp();
-        } else if (mainUserResponse == 1){
+        } else if (mainUserResponse == 1) {
             this.newUserRegister();
-        } else if(mainUserResponse == 2){
+        } else if (mainUserResponse == 2) {
             System.out.println("Enter an Option:\n[1] Sign In\n[-1] Go Back\n[0] Exit App");
             int userResponse = mainScanner.nextInt();
-            if (userResponse == 0){
+            if (userResponse == 0) {
                 this.exitApp();
-            } else if (userResponse == -1){
+            } else if (userResponse == -1) {
                 this.fullAppLogic();
-            } else if(userResponse == 1){
+            } else if (userResponse == 1) {
                 this.signInRegisteredUser();
             }
         }
+        while (true) {
+            if (this.getCurrentCustomer().getCurrentBookedLessons().size() == 0){
+                System.out.println("Enter an Option:\n[1] Book New Lesson\n[-1] Sign Out\n[0] Exit App");
+            } else{
+                System.out.println("Enter an Option:\n[1] Book New Lesson\n[2] Manage current Booking\n[-1] Sign Out\n[0] Exit App");
+            }
+            int customerResponse = mainScanner.nextInt();
+            if (customerResponse == 0) {
+                this.exitApp();
 
-        System.out.println("Enter an Option:\n[1] Book New Lesson\n[2] Manage current Booking\n[-1] Sign Out\n[0] Exit App");
-        int customerResponse = mainScanner.nextInt();
-        if (customerResponse == 0) {
-            this.exitApp();
+            } else if (customerResponse == -1) {
+                this.setCurrentCustomer(null);
+                this.fullAppLogic();
+            }
 
-        } else if (customerResponse == -1){
-            this.setCurrentCustomer(null);
-            this.fullAppLogic();
+            this.newMethod1(customerResponse);
         }
-
-        this.newMethod1(customerResponse);
     }
 
     public void newMethod1(int customerResponse) throws IOException {
-        while (true) {
 
             if (customerResponse == 1) {
-                this.bookALesson();
+                System.out.println("Please select how you want to view the available lessons.\nEnter an Option\n[1] View by Day of the Week\n[2] View by Fitness Activity\n[-1] Go Back");
+                int responseView = scanner.nextInt();
+                if (responseView == -1){
+                    return;
+                }
+
+                this.bookALesson(responseView);
             } else if (customerResponse == 2) {
                 Scanner mainStringScanner = new Scanner(System.in);
                 String bookingID;
@@ -265,7 +292,7 @@ public class AppManagerDemo implements Serializable {
                 Booking currentBooking = this.bookingManager.getSpecificBooking(bookingID);
                 this.manageBooking(currentBooking);
             }
-        }
+
     }
 
 
