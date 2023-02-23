@@ -230,7 +230,7 @@ public class AppManagerDemo implements Serializable {
     public void fullAppLogic() throws IOException {
         Scanner mainScanner = new Scanner(System.in);
 
-        System.out.println("Enter an Option:\n[1] New User\n[2] Registered User\n[0] Exit App");
+        System.out.println("Enter an Option:\n[1] Sign Up\n[2] Sign In\n[0] Exit App");
         int mainUserResponse = mainScanner.nextInt();
         if (mainUserResponse == 0) {
             this.exitApp();
