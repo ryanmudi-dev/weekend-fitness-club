@@ -105,18 +105,16 @@ public class CalenderManager implements Serializable {
     public ArrayList<Lesson> getAvailableLessons(String day){
         ArrayList<Lesson> availableLessons = new ArrayList<>();
         if(day.equals("Saturday")){
-            for (FitnessActivity currentActivity : allActivities) {
-                ArrayList<Lesson> currentAvailableLessons = currentActivity.getAvailableLessons();
-                for (Lesson currentLesson : currentAvailableLessons) {
+            for (ArrayList<Lesson> currentMonth : this.lessonsByMonth.values()) {
+                for (Lesson currentLesson : currentMonth) {
                     if (Integer.parseInt(currentLesson.getDateSlot().substring(4, 6)) == 1 && !currentLesson.isFilled()) {
                         availableLessons.add(currentLesson);
                     }
                 }
             }
         } else if (day.equals("Sunday")){
-            for (FitnessActivity currentActivity : allActivities) {
-                ArrayList<Lesson> currentAvailableLessons = currentActivity.getAvailableLessons();
-                for (Lesson currentLesson : currentAvailableLessons) {
+            for (ArrayList<Lesson> currentMonth : this.lessonsByMonth.values()) {
+                for (Lesson currentLesson : currentMonth) {
                     if (Integer.parseInt(currentLesson.getDateSlot().substring(4, 6)) == 2 && !currentLesson.isFilled()) {
                         availableLessons.add(currentLesson);
                     }
