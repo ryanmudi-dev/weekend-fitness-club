@@ -1,5 +1,6 @@
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class CalenderManager implements Serializable {
 
@@ -9,6 +10,8 @@ public class CalenderManager implements Serializable {
     private final FitnessActivity spin = new FitnessActivity("Spin", 15);
     private final FitnessActivity zumba = new FitnessActivity("Zumba", 35);
     private final FitnessActivity aquacise = new FitnessActivity("Aquacise", 25);
+
+    private HashMap<Integer, ArrayList<Lesson>> lessonsByMonth;
 
     public FitnessActivity getSpecificActivity(String name) {
         return switch (name) {
@@ -25,84 +28,79 @@ public class CalenderManager implements Serializable {
 
 
 
-    //_________________________ Calender _________________________________________________
 
-    /* DateSlot Format: First 2 digit; Month, Second 2 digit; Week Number, Third 2 digit; Day 1 or 2(Sat or Sunday)
-     * Last 2 digit; First or Second lesson of the day.
-     */
-
-    public Lesson marchWeek1SatLesson1 = new Lesson(yoga, "03010101");
-    public Lesson marchWeek1SatLesson2 = new Lesson(spin, "03010102");
-    public Lesson marchWeek1SunLesson1 = new Lesson(zumba, "03010201");
-    public Lesson marchWeek1SunLesson2 = new Lesson(aquacise, "03010202");
-
-    public Lesson marchWeek2SatLesson1 = new Lesson(zumba, "03020101");
-    public Lesson marchWeek2SatLesson2 = new Lesson(aquacise, "03020102");
-    public Lesson marchWeek2SunLesson1 = new Lesson(yoga, "03020201");
-    public Lesson marchWeek2SunLesson2 = new Lesson(spin, "03020202");
-
-    public Lesson marchWeek3SatLesson1 = new Lesson(yoga, "03030101");
-    public Lesson marchWeek3SatLesson2 = new Lesson(spin, "03030102");
-    public Lesson marchWeek3SunLesson1 = new Lesson(zumba, "03030201");
-    public Lesson marchWeek3SunLesson2 = new Lesson(aquacise, "03030202");
-
-    public Lesson marchWeek4SatLesson1 = new Lesson(zumba, "03040101");
-    public Lesson marchWeek4SatLesson2 = new Lesson(yoga, "03040102");
-    public Lesson marchWeek4SunLesson1 = new Lesson(aquacise, "03040201");
-    public Lesson marchWeek4SunLesson2 = new Lesson(spin, "03040202");
-
-
-    public Lesson aprilWeek1SatLesson1 = new Lesson(aquacise, "04010101");
-    public Lesson aprilWeek1SatLesson2 = new Lesson(spin, "04010102");
-    public Lesson aprilWeek1SunLesson1 = new Lesson(zumba, "04010201");
-    public Lesson aprilWeek1SunLesson2 = new Lesson(yoga, "04010202");
-
-    public Lesson aprilWeek2SatLesson1 = new Lesson(yoga, "04020101");
-    public Lesson aprilWeek2SatLesson2 = new Lesson(spin, "04020102");
-    public Lesson aprilWeek2SunLesson1 = new Lesson(aquacise, "04020201");
-    public Lesson aprilWeek2SunLesson2 = new Lesson(zumba, "04020202");
-
-    public Lesson aprilWeek3SatLesson1 = new Lesson(yoga, "04030101");
-    public Lesson aprilWeek3SatLesson2 = new Lesson(spin, "04030102");
-    public Lesson aprilWeek3SunLesson1 = new Lesson(zumba, "04030201");
-    public Lesson aprilWeek3SunLesson2 = new Lesson(aquacise, "04030202");
-
-    public Lesson aprilWeek4SatLesson1 = new Lesson(zumba, "04040101");
-    public Lesson aprilWeek4SatLesson2 = new Lesson(spin, "04040102");
-    public Lesson aprilWeek4SunLesson1 = new Lesson(aquacise, "04040201");
-    public Lesson aprilWeek4SunLesson2 = new Lesson(spin, "04040202");
 
     public CalenderManager() {
         this.allActivities.add(yoga);
         this.allActivities.add(spin);
         this.allActivities.add(zumba);
         this.allActivities.add(aquacise);
+        this.lessonsByMonth = new HashMap<>();
+
+        //------------------------------------Calender-------------------------------------//
+
+        //----------------------------------March-------------------------------------------//
+        this.createNewLesson(this.yoga, 3,1,1,1);
+        this.createNewLesson(this.spin, 3,1,1,2);
+        this.createNewLesson(this.zumba, 3,1,2,1);
+        this.createNewLesson(this.aquacise, 3,1,2,2);
+
+        this.createNewLesson(this.zumba, 3,2,1,1);
+        this.createNewLesson(this.aquacise, 3,2,1,2);
+        this.createNewLesson(this.yoga, 3,2,2,1);
+        this.createNewLesson(this.spin, 3,2,2,2);
+
+        this.createNewLesson(this.yoga, 3,3,1,1);
+        this.createNewLesson(this.spin, 3,3,1,2);
+        this.createNewLesson(this.zumba, 3,3,2,1);
+        this.createNewLesson(this.aquacise, 3,3,2,2);
+
+        this.createNewLesson(this.zumba, 3,4,1,1);
+        this.createNewLesson(this.aquacise, 3,4,1,2);
+        this.createNewLesson(this.yoga, 3,4,2,1);
+        this.createNewLesson(this.spin, 3,4,2,2);
+
+
+        //----------------------------------April-------------------------------------------//
+
+        this.createNewLesson(this.yoga, 4,1,1,1);
+        this.createNewLesson(this.spin, 4,1,1,2);
+        this.createNewLesson(this.zumba, 4,1,2,1);
+        this.createNewLesson(this.aquacise, 4,1,2,2);
+
+        this.createNewLesson(this.zumba, 4,2,1,1);
+        this.createNewLesson(this.aquacise, 4,2,1,2);
+        this.createNewLesson(this.yoga, 4,2,2,1);
+        this.createNewLesson(this.spin, 4,2,2,2);
+
+        this.createNewLesson(this.yoga, 4,3,1,1);
+        this.createNewLesson(this.spin, 4,3,1,2);
+        this.createNewLesson(this.zumba, 4,3,2,1);
+        this.createNewLesson(this.aquacise, 4,3,2,2);
+
+        this.createNewLesson(this.zumba, 4,4,1,1);
+        this.createNewLesson(this.aquacise, 4,4,1,2);
+        this.createNewLesson(this.yoga, 4,4,2,1);
+        this.createNewLesson(this.spin, 4,4,2,2);
     }
 
-//    public ArrayList<String> getAvailableLessons(String day){
-//        ArrayList<String> availableLessons = new ArrayList<>();
-//        if(day.equals("Saturday")){
-//            for (FitnessActivity currentActivity : allActivities) {
-//                ArrayList<Lessons> availableSlots = currentActivity.getAvailableSlots();
-//                for (String currentSlot : availableSlots) {
-//                    if (Integer.parseInt(currentSlot.substring(4, 6)) == 1) {
-//                        availableLessons.add(currentActivity.getActivityName() + ": " +convertDateSlotToDateStrings(currentSlot));
-//                    }
-//                }
-//            }
-//        } else if (day.equals("Sunday")){
-//            for (FitnessActivity currentActivity : allActivities) {
-//                ArrayList<String> availableSlots = currentActivity.getAvailableSlots();
-//                for (String currentSlot : availableSlots) {
-//                    if (Integer.parseInt(currentSlot.substring(4, 6)) == 2) {
-//                        availableLessons.add(convertDateSlotToDateStrings(currentSlot));
-//                    }
-//                }
-//            }
-//        }
-//
-//        return availableLessons;
-//    }
+    public void createNewLesson(FitnessActivity fitnessActivity, int month, int week, int day, int session){
+        String dateSlot;
+        if (month < 10){
+            dateSlot = "0" + month + "0" + week + "0" + day + "0" + session;
+        } else{
+            dateSlot = "" + month + "0" + week + "0" + day + "0" + session;
+        }
+        Lesson newLesson = new Lesson(fitnessActivity, dateSlot);
+        if(this.lessonsByMonth.containsKey(month)){
+            this.lessonsByMonth.get(month).add(newLesson);
+        } else {
+            this.lessonsByMonth.put(month, new ArrayList<Lesson>());
+            this.lessonsByMonth.get(month).add(newLesson);
+        }
+
+    }
+
 
     public ArrayList<Lesson> getAvailableLessons(String day){
         ArrayList<Lesson> availableLessons = new ArrayList<>();

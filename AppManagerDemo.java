@@ -243,11 +243,11 @@ public class AppManagerDemo implements Serializable {
                 this.fullAppLogic();
             }
 
-            this.newMethod1(customerResponse);
+            this.appLogicExtension(customerResponse);
         }
     }
 
-    public void newMethod1(int customerResponse) throws IOException {
+    public void appLogicExtension(int customerResponse) throws IOException {
 
             if (customerResponse == 1) {
                 System.out.println("Please select how you want to view the available lessons.\nEnter an Option\n[1] View by Day of the Week\n[2] View by Fitness Activity\n[-1] Go Back");

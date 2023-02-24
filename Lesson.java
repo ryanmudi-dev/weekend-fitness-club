@@ -7,6 +7,16 @@ public class Lesson implements Serializable {
     private String dateSlot;
     final int CAPACITY = 5;
     private int numberOfBookings;
+    private int numberOfAttendance;
+
+    public int getNumberOfAttendance() {
+        return numberOfAttendance;
+    }
+
+    public void addAttendance() {
+        this.numberOfAttendance += 1;
+    }
+
     private ArrayList<Rating> reviews;
     private boolean isFilled;
 
@@ -59,6 +69,7 @@ public class Lesson implements Serializable {
         this.fitnessActivity = fitnessActivity;
         this.dateSlot = dateSlot;
         this.numberOfBookings = 0;
+        this.numberOfAttendance = 0;
         this.isFilled = false;
         this.reviews = new ArrayList<Rating>();
         fitnessActivity.addLesson(this);
@@ -68,7 +79,7 @@ public class Lesson implements Serializable {
         this.reviews.add(rating);
     }
 
-    public float calculateAverageRating(){
+    public float getAverageRating(){
         int sum = 0;
         for (Rating review : this.reviews) {
             sum += review.getRating();
@@ -77,6 +88,10 @@ public class Lesson implements Serializable {
             return (float) sum / (float) this.reviews.size();
         }
         return -1;
+    }
+
+    public float getAmountGenerated(){
+        return this.fitnessActivity.getPrice() * this.numberOfAttendance;
     }
 
     public boolean isFilled(){
