@@ -8,6 +8,8 @@ public class Lesson implements Serializable {
     final int CAPACITY = 5;
     private int numberOfBookings;
     private int numberOfAttendance;
+    private ArrayList<Rating> reviews;
+    private boolean isFilled;
 
     public int getNumberOfAttendance() {
         return numberOfAttendance;
@@ -16,9 +18,6 @@ public class Lesson implements Serializable {
     public void addAttendance() {
         this.numberOfAttendance += 1;
     }
-
-    private ArrayList<Rating> reviews;
-    private boolean isFilled;
 
     public FitnessActivity getFitnessActivity() {
         return fitnessActivity;
@@ -87,7 +86,7 @@ public class Lesson implements Serializable {
         if (sum > 0) {
             return (float) sum / (float) this.reviews.size();
         }
-        return -1;
+        return 0;
     }
 
     public float getAmountGenerated(){
@@ -106,7 +105,7 @@ public class Lesson implements Serializable {
         int sessionOfTheDaySlice = Integer.parseInt(dateSlot.substring(6, 8));
         String day;
 
-        String month = new DateFormatSymbols().getMonths()[monthSlice];
+        String month = new DateFormatSymbols().getMonths()[monthSlice-1];
         if (daySlice == 1) {
             day = "Saturday";
         } else {

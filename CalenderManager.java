@@ -1,4 +1,5 @@
 import java.io.Serializable;
+import java.text.DateFormatSymbols;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -13,6 +14,10 @@ public class CalenderManager implements Serializable {
 
     private HashMap<Integer, ArrayList<Lesson>> lessonsByMonth;
 
+    public HashMap<Integer, ArrayList<Lesson>> getLessonsByMonth() {
+        return lessonsByMonth;
+    }
+
     public FitnessActivity getSpecificActivity(String name) {
         return switch (name) {
             case "Yoga" -> yoga;
@@ -23,18 +28,8 @@ public class CalenderManager implements Serializable {
         };
     }
 
-
-    private ArrayList<FitnessActivity> allActivities = new ArrayList<>();
-
-
-
-
-
     public CalenderManager() {
-        this.allActivities.add(yoga);
-        this.allActivities.add(spin);
-        this.allActivities.add(zumba);
-        this.allActivities.add(aquacise);
+
         this.lessonsByMonth = new HashMap<>();
 
         //------------------------------------Calender-------------------------------------//
@@ -47,16 +42,16 @@ public class CalenderManager implements Serializable {
 
         this.createNewLesson(this.zumba, 3,2,1,1);
         this.createNewLesson(this.aquacise, 3,2,1,2);
-        this.createNewLesson(this.yoga, 3,2,2,1);
-        this.createNewLesson(this.spin, 3,2,2,2);
+        this.createNewLesson(this.spin, 3,2,2,1);
+        this.createNewLesson(this.yoga, 3,2,2,2);
 
         this.createNewLesson(this.yoga, 3,3,1,1);
         this.createNewLesson(this.spin, 3,3,1,2);
         this.createNewLesson(this.zumba, 3,3,2,1);
         this.createNewLesson(this.aquacise, 3,3,2,2);
 
-        this.createNewLesson(this.zumba, 3,4,1,1);
-        this.createNewLesson(this.aquacise, 3,4,1,2);
+        this.createNewLesson(this.aquacise, 3,4,1,1);
+        this.createNewLesson(this.zumba, 3,4,1,2);
         this.createNewLesson(this.yoga, 3,4,2,1);
         this.createNewLesson(this.spin, 3,4,2,2);
 
@@ -126,13 +121,16 @@ public class CalenderManager implements Serializable {
     }
 
     public ArrayList<Lesson> getAvailableLessons(FitnessActivity fitnessActivity){
-        ArrayList<Lesson> allAvailableLessons = fitnessActivity.getAvailableLessons();
-        ArrayList<Lesson> availableLessons = new ArrayList<>();
-        for (Lesson currentLesson : allAvailableLessons) {
-            if (!currentLesson.isFilled()) {
-                availableLessons.add(currentLesson);
+        ArrayList<Lesson> availableLessons = new ArrayList<Lesson>();
+        HashMap<Integer, ArrayList<Lesson>> availableLessonsByMonths = fitnessActivity.getAvailableLessons();
+        for(ArrayList<Lesson> currentMonthLessons : availableLessonsByMonths.values()){
+            for (Lesson currentLesson : currentMonthLessons) {
+                if (!currentLesson.isFilled()) {
+                    availableLessons.add(currentLesson);
+                }
             }
         }
+
        return availableLessons;
     }
 
@@ -142,6 +140,15 @@ public class CalenderManager implements Serializable {
             dateSlotArray.add(currentLesson.lessonToString());
         }
         return dateSlotArray;
+    }
+
+    public ArrayList<String> lessonByMonthToString(){
+        ArrayList<String> monthsString = new ArrayList<String>();
+        for (Integer currentMonth : this.getLessonsByMonth().keySet()){
+            String month = new DateFormatSymbols().getMonths()[currentMonth-1];
+            monthsString.add("[" + currentMonth + "] For " + month);
+        }
+        return monthsString;
     }
 
 

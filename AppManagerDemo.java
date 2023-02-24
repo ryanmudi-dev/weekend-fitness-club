@@ -14,6 +14,7 @@ public class AppManagerDemo implements Serializable {
     CalenderManager calenderManager = new CalenderManager();
     BookingManager bookingManager = new BookingManager();
     CustomersManager customersManager = new CustomersManager();
+    ReportManager reportManager = new ReportManager(calenderManager);
     private Customer currentCustomer = null;
     private final static String filePath = "Serialization/appState.dat";
 
@@ -145,7 +146,12 @@ public class AppManagerDemo implements Serializable {
             System.out.println("Please select a Lesson");
             for (int i = 0; i < printableLessons.size(); i++){
                 int num = i + 1;
-                System.out.println("Enter [" + num + "] for: " + printableLessons.get(i));
+                if(num < 10){
+                    System.out.println("Enter [" + num + "]  for: " + printableLessons.get(i));
+                } else{
+                    System.out.println("Enter [" + num + "] for: " + printableLessons.get(i));
+                }
+
             }
             responseView = scanner.nextInt();
             if(this.currentCustomer.currentBookedLessons().contains(availableLessons.get(responseView-1))){
@@ -210,14 +216,57 @@ public class AppManagerDemo implements Serializable {
 
     public void fullAppLogic() throws IOException {
         Scanner mainScanner = new Scanner(System.in);
-
-        System.out.println("Enter an Option:\n[1] Sign Up\n[2] Sign In\n[0] Exit App");
+        System.out.println("Enter an Option:\n[1] Sign Up\n[2] Sign In\n[3] Generated Monthly Lesson Report\n[4] Generate Monthly Champion Fitness Type Report\n[0] Exit App");
         int mainUserResponse = mainScanner.nextInt();
         if (mainUserResponse == 0) {
             this.exitApp();
-        } else if (mainUserResponse == 1) {
+
+        }
+        if (mainUserResponse == 3 || mainUserResponse == 4){
+            boolean tempcontinue = true;
+            int tempSave = mainUserResponse + 0;
+            do {
+                if (tempSave == 3){
+                    System.out.println("Please enter the month you want a report generated for or enter [-1] to go back");
+                } else{
+                    System.out.println("Please enter the month you want the Champion Report generated for or enter [-1] to go back");
+                }
+                for (String month : calenderManager.lessonByMonthToString()) {
+                    System.out.println("Enter " + month);
+                }
+                mainUserResponse = mainScanner.nextInt();
+                if (mainUserResponse == -1) {
+                    this.fullAppLogic();
+                }
+                if (tempSave == 3) {
+                    String report = reportManager.getMonthlyLessonReport(mainUserResponse);
+                    if(report != null){
+                        System.out.println("\n-----------------MONTHLY REPORT-----------------\n");
+                        System.out.println(report);
+                        tempcontinue = false;
+                    }
+
+                } else {
+                    String report = reportManager.getMonthlyChampionFitnessReport(mainUserResponse);
+                    if (report != null){
+                        System.out.println("\n--------------------------MONTHLY CHAMPION REPORT--------------------------\n");
+                        System.out.println(report);
+                        tempcontinue = false;
+                    }
+
+                }
+                if (tempcontinue){
+                    System.out.println("The month you entered is not available on the calender, please enter one of the months listed.");
+                }
+
+            } while (tempcontinue);
+            System.out.println();
+            fullAppLogic();
+
+        } else {
+            if (mainUserResponse == 1) {
             this.newUserRegister();
-        } else if (mainUserResponse == 2) {
+            } else if (mainUserResponse == 2) {
             System.out.println("Enter an Option:\n[1] Sign In\n[-1] Go Back\n[0] Exit App");
             int userResponse = mainScanner.nextInt();
             if (userResponse == 0) {
@@ -227,8 +276,8 @@ public class AppManagerDemo implements Serializable {
             } else if (userResponse == 1) {
                 this.signInRegisteredUser();
             }
-        }
-        while (true) {
+            }
+            while (true) {
             if (this.getCurrentCustomer().getCurrentBookedLessons().size() == 0){
                 System.out.println("Enter an Option:\n[1] Book New Lesson\n[-1] Sign Out\n[0] Exit App");
             } else{
@@ -245,6 +294,7 @@ public class AppManagerDemo implements Serializable {
 
             this.appLogicExtension(customerResponse);
         }
+    }
     }
 
     public void appLogicExtension(int customerResponse) throws IOException {
