@@ -3,7 +3,7 @@ import java.text.DateFormatSymbols;
 import java.util.*;
 
 public class ReportManager implements Serializable {
-    private CalenderManager calenderManager;
+    private final CalenderManager calenderManager;
 
     public ReportManager(CalenderManager calenderManager) {
         this.calenderManager = calenderManager;
@@ -60,7 +60,7 @@ public class ReportManager implements Serializable {
                 otherActivities.append(currentActivity.getActivityName()).append(": £").append(activitiesIncome.get(currentActivity)).append("\n");
             }
         }
-        monthlyReport.append("The Highest grossing Fitness Activity for ").append(monthString).append(" is ").append(championActivity.getActivityName()).append(" with a total of £").append(activitiesIncome.get(championActivity)).append(".\nThe Income for the other activities are listed below:\n").append(otherActivities.toString());
+        monthlyReport.append("The Highest grossing Fitness Activity for ").append(monthString).append(" is ").append(championActivity.getActivityName()).append(" with a total of £").append(activitiesIncome.get(championActivity)).append(".\nThe Income for the other activities are listed below:\n").append(otherActivities);
 
         return monthlyReport.toString();
     }

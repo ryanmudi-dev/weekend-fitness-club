@@ -227,8 +227,8 @@ public class WFCApp implements Serializable {
 //    }
 
     public static void main(String[] args) throws IOException {
-        AppManagerDemo appManagerDemo = new AppManagerDemo();
-        appManagerDemo.fullAppLogic();
+        AppManager appManager = new AppManager();
+        appManager.fullAppLogic();
     }
 
 

@@ -6,7 +6,7 @@ public class Customer implements Serializable {
     private String customerName;
     private String customerEmailAddress;
     private ArrayList<Lesson> currentBookedLessons;
-    private ArrayList<Booking> currentBookings;
+    private final ArrayList<Booking> currentBookings;
 
     public String getCustomerEmailAddress() {
         return customerEmailAddress;

@@ -5,11 +5,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-interface executeFunction {
-    boolean execute(String str);
-}
-
-public class AppManagerDemo implements Serializable {
+public class AppManager implements Serializable {
     transient Scanner scanner = new Scanner(System.in);
     CalenderManager calenderManager = new CalenderManager();
     BookingManager bookingManager = new BookingManager();
@@ -26,7 +22,7 @@ public class AppManagerDemo implements Serializable {
         this.currentCustomer = currentCustomer;
     }
 
-    public AppManagerDemo() throws IOException {
+    public AppManager() throws IOException {
     }
 
     public void newUserRegister(){
