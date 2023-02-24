@@ -48,19 +48,43 @@ public class ReportManager implements Serializable {
                 championActivity = currentActivity;
             }
         }
-        String monthString = new DateFormatSymbols().getMonths()[month-1];
+        StringBuilder monthString = new StringBuilder(new DateFormatSymbols().getMonths()[month - 1]);
 
         if (activitiesIncome.get(championActivity) == 0){
             return "No Lesson has been attended for " + monthString;
         }
 
         StringBuilder otherActivities = new StringBuilder();
+        String string0 = " Activity";
+        String string1 = " is ";
+        String string2 = "";
+
+        ArrayList<String> champions = new ArrayList<>();
+        StringBuilder championsName = new StringBuilder(championActivity.getActivityName());
+
         for (FitnessActivity currentActivity : activitiesIncome.keySet()){
             if (currentActivity != championActivity){
-                otherActivities.append(currentActivity.getActivityName()).append(": £").append(activitiesIncome.get(currentActivity)).append("\n");
+                if (Objects.equals(activitiesIncome.get(currentActivity), activitiesIncome.get(championActivity))){
+                    champions.add(currentActivity.getActivityName());
+                    string0 = " Activities";
+                    string1 = " are ";
+                    string2 = " each";
+
+                }else{
+                    otherActivities.append(currentActivity.getActivityName()).append(": £").append(activitiesIncome.get(currentActivity)).append("\n");
+                }
+
             }
         }
-        monthlyReport.append("The Highest grossing Fitness Activity for ").append(monthString).append(" is ").append(championActivity.getActivityName()).append(" with a total of £").append(activitiesIncome.get(championActivity)).append(".\nThe Income for the other activities are listed below:\n").append(otherActivities);
+        for(String currentChampion : champions){
+            if(Objects.equals(currentChampion, champions.get(champions.size() - 1))){
+                championsName.append(" and ").append(currentChampion);
+            } else {
+                championsName.append(", ").append(currentChampion);
+            }
+        }
+
+        monthlyReport.append("The Highest grossing Fitness").append(string0).append(" for ").append(monthString).append(string1).append(championsName).append(" with a total of £").append(activitiesIncome.get(championActivity)).append(string2).append(".\nThe Income for the other activities are listed below:\n").append(otherActivities);
 
         return monthlyReport.toString();
     }
