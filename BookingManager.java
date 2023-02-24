@@ -31,6 +31,8 @@ public class BookingManager implements Serializable {
         Booking newBooking = new Booking(newBookingId, customer, lesson);
         bookingHashMap.put(newBookingId,newBooking);
         customer.addLesson(lesson);
+        lesson.updateNumberOfBookings("increase");
+        customer.addBooking(newBooking);
         this.lastBooking += 1;
         return newBookingId;
 
@@ -44,10 +46,12 @@ public class BookingManager implements Serializable {
         try{
             booking.setStatus("cancelled");
             Lesson lesson = booking.getLesson();
+            Customer customer = booking.getCustormer();
 
-            booking.getCustormer().removeLesson(lesson);
+            customer.removeLesson(lesson);
+            customer.removeBooking(booking);
             lesson.updateNumberOfBookings("decrease");
-            booking.getCustormer().removeLesson(booking.getLesson());
+            booking.getCustormer().removeLesson(lesson);
             return true;}
         catch (Exception e){
             return false;
@@ -71,6 +75,7 @@ public class BookingManager implements Serializable {
         booking.setStatus("attended");
         booking.setRating(rating);
         booking.getLesson().addRating(rating);
+        customer.removeBooking(booking);
         customer.removeLesson(booking.getLesson()); // Remove attended lesson from customer's current bookings
         booking.getLesson().getFitnessActivity().removeLesson(booking.getLesson()); // Remove attended lesson from available lessons
     }

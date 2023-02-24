@@ -1,4 +1,5 @@
 import java.io.Serializable;
+import java.text.DateFormatSymbols;
 import java.util.ArrayList;
 
 public class Lesson implements Serializable {
@@ -80,6 +81,24 @@ public class Lesson implements Serializable {
 
     public boolean isFilled(){
         return this.numberOfBookings >= this.CAPACITY;
+    }
+
+    public String lessonToString(){
+        String dateSlot = this.getDateSlot();
+        int monthSlice = Integer.parseInt(dateSlot.substring(0, 2));
+        int weekSlice = Integer.parseInt(dateSlot.substring(2, 4));
+        int daySlice = Integer.parseInt(dateSlot.substring(4, 6));
+        int sessionOfTheDaySlice = Integer.parseInt(dateSlot.substring(6, 8));
+        String day;
+
+        String month = new DateFormatSymbols().getMonths()[monthSlice];
+        if (daySlice == 1) {
+            day = "Saturday";
+        } else {
+            day = "Sunday";
+        }
+        return "" + this.getFitnessActivity().getActivityName() + ": " + "Week" + weekSlice + " of " + month + ": " + day + ", Session " + sessionOfTheDaySlice;
+
     }
 
 }

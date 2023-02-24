@@ -1,5 +1,4 @@
 import java.io.Serializable;
-import java.text.DateFormatSymbols;
 import java.util.ArrayList;
 
 public class CalenderManager implements Serializable {
@@ -111,7 +110,7 @@ public class CalenderManager implements Serializable {
             for (FitnessActivity currentActivity : allActivities) {
                 ArrayList<Lesson> currentAvailableLessons = currentActivity.getAvailableLessons();
                 for (Lesson currentLesson : currentAvailableLessons) {
-                    if (Integer.parseInt(currentLesson.getDateSlot().substring(4, 6)) == 1) {
+                    if (Integer.parseInt(currentLesson.getDateSlot().substring(4, 6)) == 1 && !currentLesson.isFilled()) {
                         availableLessons.add(currentLesson);
                     }
                 }
@@ -120,7 +119,7 @@ public class CalenderManager implements Serializable {
             for (FitnessActivity currentActivity : allActivities) {
                 ArrayList<Lesson> currentAvailableLessons = currentActivity.getAvailableLessons();
                 for (Lesson currentLesson : currentAvailableLessons) {
-                    if (Integer.parseInt(currentLesson.getDateSlot().substring(4, 6)) == 2) {
+                    if (Integer.parseInt(currentLesson.getDateSlot().substring(4, 6)) == 2 && !currentLesson.isFilled()) {
                         availableLessons.add(currentLesson);
                     }
                 }
@@ -131,28 +130,24 @@ public class CalenderManager implements Serializable {
     }
 
     public ArrayList<Lesson> getAvailableLessons(FitnessActivity fitnessActivity){
-       return fitnessActivity.getAvailableLessons();
+        ArrayList<Lesson> allAvailableLessons = fitnessActivity.getAvailableLessons();
+        ArrayList<Lesson> availableLessons = new ArrayList<>();
+        for (Lesson currentLesson : allAvailableLessons) {
+            if (!currentLesson.isFilled()) {
+                availableLessons.add(currentLesson);
+            }
+        }
+       return availableLessons;
     }
 
     public ArrayList<String> convertLessonArrayToDateStringsArray(ArrayList<Lesson> lessonArray) {
         ArrayList<String> dateSlotArray = new ArrayList<String>();
         for (Lesson currentLesson : lessonArray) {
-            String dateSlot = currentLesson.getDateSlot();
-            int monthSlice = Integer.parseInt(dateSlot.substring(0, 2));
-            int weekSlice = Integer.parseInt(dateSlot.substring(2, 4));
-            int daySlice = Integer.parseInt(dateSlot.substring(4, 6));
-            int sessionOfTheDaySlice = Integer.parseInt(dateSlot.substring(6, 8));
-            String day;
-
-            String month = new DateFormatSymbols().getMonths()[monthSlice];
-            if (daySlice == 1) {
-                day = "Saturday";
-            } else {
-                day = "Sunday";
-            }
-            dateSlotArray.add("" + currentLesson.getFitnessActivity().getActivityName() + ": " + "Week" + weekSlice + " of " + month + ": " + day + ", Session " + sessionOfTheDaySlice);
+            dateSlotArray.add(currentLesson.lessonToString());
         }
         return dateSlotArray;
     }
+
+
 
 }

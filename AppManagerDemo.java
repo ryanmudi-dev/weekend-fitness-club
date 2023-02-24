@@ -261,7 +261,13 @@ public class AppManagerDemo implements Serializable {
                 Scanner mainStringScanner = new Scanner(System.in);
                 String bookingID;
                 do {
-                    System.out.println("Please Enter Your Booking ID or Enter 'Exit' to Exit the App:");
+                    ArrayList<String> currentBookingsString = this.getCurrentCustomer().currentBookingsToString();
+                    System.out.println("Here are your current bookings:");
+                    for (String currentBooking : currentBookingsString){
+                        System.out.println(currentBooking);
+                    }
+                    System.out.println();
+                    System.out.println("Please Enter the Booking ID you want to manage or Type 'Exit' to Exit the App:");
                     bookingID = mainStringScanner.next();
                     if (bookingID.equalsIgnoreCase("exit")) {
                         this.exitApp();

@@ -6,6 +6,19 @@ public class Customer implements Serializable {
     private String customerName;
     private String customerEmailAddress;
     private ArrayList<Lesson> currentBookedLessons;
+    private ArrayList<Booking> currentBookings;
+
+    public String getCustomerEmailAddress() {
+        return customerEmailAddress;
+    }
+
+    public void setCustomerEmailAddress(String customerEmailAddress) {
+        this.customerEmailAddress = customerEmailAddress;
+    }
+
+    public ArrayList<Booking> getCurrentBookings() {
+        return currentBookings;
+    }
 
     public String getEmailAddress() {
         return customerEmailAddress;
@@ -40,6 +53,7 @@ public class Customer implements Serializable {
         this.customerName = name;
         this.customerEmailAddress = emailAddress;
         this.currentBookedLessons = new ArrayList<Lesson>();
+        this.currentBookings = new ArrayList<Booking>();
     }
 
     public void addLesson(Lesson lesson) {
@@ -48,5 +62,23 @@ public class Customer implements Serializable {
 
     public void removeLesson(Lesson lesson) {
         this.currentBookedLessons.remove(lesson);
+    }
+
+    public void addBooking(Booking booking){
+        this.currentBookings.add(booking);
+    }
+
+    public void removeBooking(Booking booking){
+        this.currentBookings.remove(booking);
+    }
+
+    public ArrayList<String> currentBookingsToString(){
+        ArrayList<String> currentBookingsString = new ArrayList<String>();
+        for (Booking currentBooking : this.getCurrentBookings()){
+            String bookingID = currentBooking.getBookingId();
+            String lessonString = currentBooking.getLesson().lessonToString();
+            currentBookingsString.add("[ID: '" + bookingID + "'] " + lessonString);
+        }
+        return currentBookingsString;
     }
 }
