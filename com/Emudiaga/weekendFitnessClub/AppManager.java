@@ -1,3 +1,5 @@
+package com.Emudiaga.weekendFitnessClub;
+
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -13,7 +15,7 @@ public class AppManager implements Serializable {
     CustomersManager customersManager = new CustomersManager();
     ReportManager reportManager = new ReportManager(calenderManager);
     private Customer currentCustomer = null;
-    private final static String filePath = "Serialization/appState.dat";
+    private final static String filePath = "com/Emudiaga/weekendFitnessClub/Serialization/appState.dat";
 
     public Customer getCurrentCustomer() {
         return this.currentCustomer;
@@ -285,7 +287,7 @@ public class AppManager implements Serializable {
             do{
                 System.out.println("Enter Email Address");
                 emailAddress = scanner.next();
-                if (emailAddress.contains("@")){
+                if (emailAddress.contains("@") || emailAddress.equalsIgnoreCase("exit")){
                     invalidEmail = false;
                 } else {
                     System.out.println("The Email Address you entered is invalid, Please  enter a valid Email Address");
@@ -293,7 +295,7 @@ public class AppManager implements Serializable {
 
             } while(invalidEmail);
             returningCustomer = this.customersManager.getSpecificCustomer(emailAddress);
-            if(emailAddress.toLowerCase().equals("exit")){
+            if(emailAddress.equalsIgnoreCase("exit")){
                 this.exitApp();
             } else if(returningCustomer == null){
                 System.out.println("The Email you entered is Incorrect, Please enter the correct email or Type 'Exit' to exit the App");

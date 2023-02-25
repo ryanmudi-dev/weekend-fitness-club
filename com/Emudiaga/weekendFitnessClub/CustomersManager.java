@@ -1,3 +1,5 @@
+package com.Emudiaga.weekendFitnessClub;
+
 import java.io.*;
 import java.util.HashMap;
 

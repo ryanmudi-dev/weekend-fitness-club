@@ -1,3 +1,5 @@
+package com.Emudiaga.weekendFitnessClub;
+
 import java.io.Serializable;
 import java.text.DateFormatSymbols;
 import java.util.ArrayList;

@@ -1,3 +1,5 @@
+package com.Emudiaga.weekendFitnessClub;
+
 import java.io.Serializable;
 
 public class Booking implements Serializable {
