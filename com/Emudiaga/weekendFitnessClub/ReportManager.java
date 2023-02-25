@@ -27,11 +27,11 @@ public class ReportManager implements Serializable {
 
     public String getMonthlyChampionFitnessReport(int month){
         StringBuilder monthlyReport = new StringBuilder();
-        HashMap<FitnessActivity, Integer> activitiesIncome = new HashMap<>();
-        activitiesIncome.put(calenderManager.getSpecificActivity("Yoga"), 0);
-        activitiesIncome.put(calenderManager.getSpecificActivity("Spin"), 0);
-        activitiesIncome.put(calenderManager.getSpecificActivity("Zumba"), 0);
-        activitiesIncome.put(calenderManager.getSpecificActivity("Aquacise"), 0);
+        HashMap<FitnessActivity, Float> activitiesIncome = new HashMap<>();
+        activitiesIncome.put(calenderManager.getSpecificActivity("Yoga"), (float) 0);
+        activitiesIncome.put(calenderManager.getSpecificActivity("Spin"), (float) 0);
+        activitiesIncome.put(calenderManager.getSpecificActivity("Zumba"), (float) 0);
+        activitiesIncome.put(calenderManager.getSpecificActivity("Aquacise"), (float) 0);
 
         ArrayList<Lesson> currentLessons = calenderManager.getLessonsByMonth().get(month);
         if (currentLessons == null){
@@ -39,8 +39,8 @@ public class ReportManager implements Serializable {
         }
 
         for (Lesson currentLesson : currentLessons){
-            int income = currentLesson.getNumberOfAttendance() * (int)currentLesson.getFitnessActivity().getPrice();
-            int currentTotal = activitiesIncome.get(currentLesson.getFitnessActivity());
+            float income = currentLesson.getAmountGenerated();
+            float currentTotal = activitiesIncome.get(currentLesson.getFitnessActivity());
             activitiesIncome.replace(currentLesson.getFitnessActivity(), currentTotal + income);
         }
 
