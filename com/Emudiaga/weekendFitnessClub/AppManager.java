@@ -285,7 +285,7 @@ public class AppManager implements Serializable {
             boolean invalidEmail = true;
             String emailAddress;
             do{
-                System.out.println("Enter Email Address");
+                System.out.println("Enter Email Address or Type 'Exit' to exit the App.");
                 emailAddress = scanner.next();
                 if ((emailAddress.contains("@") && emailAddress.contains(".")) || emailAddress.equalsIgnoreCase("exit")){
                     invalidEmail = false;
