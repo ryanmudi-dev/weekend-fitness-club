@@ -38,7 +38,7 @@ public class AppManager implements Serializable {
         do{
             System.out.println("Enter Email Address");
             emailAddress = scanner.next();
-            if (emailAddress.contains("@")){
+            if (emailAddress.contains("@") && emailAddress.contains(".")){
                 invalidEmail = false;
             } else {
                 System.out.println("The Email Address you entered is invalid, Please  enter a valid Email Address");
@@ -287,7 +287,7 @@ public class AppManager implements Serializable {
             do{
                 System.out.println("Enter Email Address");
                 emailAddress = scanner.next();
-                if (emailAddress.contains("@") || emailAddress.equalsIgnoreCase("exit")){
+                if ((emailAddress.contains("@") && emailAddress.contains(".")) || emailAddress.equalsIgnoreCase("exit")){
                     invalidEmail = false;
                 } else {
                     System.out.println("The Email Address you entered is invalid, Please  enter a valid Email Address");
