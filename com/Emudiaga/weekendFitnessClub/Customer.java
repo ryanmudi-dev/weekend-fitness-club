@@ -7,7 +7,7 @@ public class Customer implements Serializable {
 
     private String customerName;
     private String customerEmailAddress;
-    private ArrayList<Lesson> currentBookedLessons;
+    private ArrayList<Lesson> bookedLessons;
     private final ArrayList<Booking> currentBookings;
 
     public String getCustomerEmailAddress() {
@@ -31,11 +31,11 @@ public class Customer implements Serializable {
     }
 
     public ArrayList<Lesson> getCurrentBookedLessons() {
-        return currentBookedLessons;
+        return bookedLessons;
     }
 
     public void setCurrentBookedLessons(ArrayList<Lesson> currentBookedLessons) {
-        this.currentBookedLessons = currentBookedLessons;
+        this.bookedLessons = currentBookedLessons;
     }
 
 
@@ -48,22 +48,22 @@ public class Customer implements Serializable {
     }
 
     public ArrayList<Lesson> currentBookedLessons() {
-        return currentBookedLessons;
+        return bookedLessons;
     }
 
     public Customer(String name, String emailAddress){
         this.customerName = name;
         this.customerEmailAddress = emailAddress;
-        this.currentBookedLessons = new ArrayList<Lesson>();
+        this.bookedLessons = new ArrayList<Lesson>();
         this.currentBookings = new ArrayList<Booking>();
     }
 
     public void addLesson(Lesson lesson) {
-        this.currentBookedLessons.add(lesson);
+        this.bookedLessons.add(lesson);
     }
 
     public void removeLesson(Lesson lesson) {
-        this.currentBookedLessons.remove(lesson);
+        this.bookedLessons.remove(lesson);
     }
 
     public void addBooking(Booking booking){
@@ -75,11 +75,13 @@ public class Customer implements Serializable {
     }
 
     public ArrayList<String> currentBookingsToString(){
-        ArrayList<String> currentBookingsString = new ArrayList<String>();
+        ArrayList<String> currentBookingsString = new ArrayList<>();
         for (Booking currentBooking : this.getCurrentBookings()){
-            String bookingID = currentBooking.getBookingId();
-            String lessonString = currentBooking.getLesson().lessonToString();
-            currentBookingsString.add("[ID: '" + bookingID + "'] " + lessonString);
+            if(!currentBooking.getStatus().equals("attended") && !currentBooking.getStatus().equals("cancelled")){
+                String bookingID = currentBooking.getBookingId();
+                String lessonString = currentBooking.getLesson().lessonToString();
+                currentBookingsString.add("[ID: '" + bookingID + "'] " + lessonString);
+            }
         }
         return currentBookingsString;
     }

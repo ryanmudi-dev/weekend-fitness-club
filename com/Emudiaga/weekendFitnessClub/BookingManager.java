@@ -28,23 +28,12 @@ public class BookingManager implements Serializable {
 
     }
 
-    public boolean cancelBooking(Booking booking){
-        try{
-            booking.setStatus("cancelled");
-            Lesson lesson = booking.getLesson();
-            Customer customer = booking.getCustormer();
+    public void cancelBooking(Booking booking){
+        booking.setStatus("cancelled");
+        Lesson lesson = booking.getLesson();
 
-            customer.removeLesson(lesson);
-            customer.removeBooking(booking);
-            lesson.updateNumberOfBookings("decrease");
-            booking.getCustormer().removeLesson(lesson);
-            return true;}
-        catch (Exception e){
-            return false;
-
-        }
-
-
+        booking.getCustormer().removeLesson(lesson);
+        lesson.updateNumberOfBookings("decrease");
     }
 
     public Booking getSpecificBooking(String bookingId){
@@ -62,9 +51,6 @@ public class BookingManager implements Serializable {
         booking.setRating(rating);
         booking.getLesson().addRating(rating);
         booking.getLesson().addAttendance();
-        customer.removeBooking(booking);
-        customer.removeLesson(booking.getLesson()); // Remove attended lesson from customer's current bookings
-        booking.getLesson().getFitnessActivity().removeLesson(booking.getLesson()); // Remove attended lesson from available lessons
     }
 
     public void changeBookedLesson(Customer customer, Booking booking, Lesson oldLesson, Lesson newLesson){

@@ -351,7 +351,7 @@ public class AppManager implements Serializable {
         }
         if (mainUserResponse == 3 || mainUserResponse == 4){
             boolean tempcontinue = true;
-            int tempSave = mainUserResponse + 0;
+            int tempSave = Integer.valueOf(mainUserResponse);
             do {
 
 
