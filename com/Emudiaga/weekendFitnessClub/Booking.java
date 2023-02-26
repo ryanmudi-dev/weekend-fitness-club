@@ -24,11 +24,11 @@ public class Booking implements Serializable {
         this.bookingId = bookingId;
     }
 
-    public Customer getCustormer() {
+    public Customer getCustomer() {
         return customer;
     }
 
-    public void setCustormer(Customer customer) {
+    public void setCustomer(Customer customer) {
         this.customer = customer;
     }
 

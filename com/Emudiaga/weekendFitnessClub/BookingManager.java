@@ -32,7 +32,7 @@ public class BookingManager implements Serializable {
         booking.setStatus("cancelled");
         Lesson lesson = booking.getLesson();
 
-        booking.getCustormer().removeLesson(lesson);
+        booking.getCustomer().removeLesson(lesson);
         lesson.updateNumberOfBookings("decrease");
     }
 
