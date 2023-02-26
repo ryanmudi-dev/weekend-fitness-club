@@ -22,7 +22,7 @@ public class WFCApp implements Serializable {
             appManager = new AppManager();
         } finally {
             assert appManager != null;
-            appManager.scanner = new Scanner(System.in);
+            appManager.setScanner(new Scanner(System.in));
         }
 
         /*----------------------------Run Full App Logic---------------*/

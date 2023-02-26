@@ -5,31 +5,24 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class FitnessActivity implements Serializable {
-    private String activityName;
-    private float price;
-    private HashMap<Integer, ArrayList<Lesson>> availableLesson;
+    private final String activityName;
+    private final float price;
+    private final HashMap<Integer, ArrayList<Lesson>> availableLesson;
 
     public FitnessActivity(String activityName, float price) {
         this.activityName = activityName;
         this.price = price;
-        this.availableLesson = new HashMap<Integer, ArrayList<Lesson>>();
+        this.availableLesson = new HashMap<>();
     }
 
     public String getActivityName() {
         return activityName;
     }
 
-    public void setActivityName(String activityName) {
-        this.activityName = activityName;
-    }
-
     public float getPrice() {
         return price;
     }
 
-    public void setPrice(float price) {
-        this.price = price;
-    }
 
     public HashMap<Integer, ArrayList<Lesson>> getAvailableLessons() {
         return availableLesson;
@@ -40,7 +33,7 @@ public class FitnessActivity implements Serializable {
         if(this.availableLesson.containsKey(month)){
             this.availableLesson.get(month).add(lesson);
         } else {
-            this.availableLesson.put(month, new ArrayList<Lesson>());
+            this.availableLesson.put(month, new ArrayList<>());
             this.availableLesson.get(month).add(lesson);
         }
     }

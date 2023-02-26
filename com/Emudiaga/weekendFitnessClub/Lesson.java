@@ -5,12 +5,12 @@ import java.text.DateFormatSymbols;
 import java.util.ArrayList;
 
 public class Lesson implements Serializable {
-    private FitnessActivity fitnessActivity;
-    private String dateSlot;
-    final int CAPACITY = 5;
+    private final FitnessActivity fitnessActivity;
+    private final String dateSlot;
+    final static int CAPACITY = 5;
     private int numberOfBookings;
     private int numberOfAttendance;
-    private ArrayList<Rating> reviews;
+    private final ArrayList<Rating> reviews;
     private boolean isFilled;
 
     public int getNumberOfAttendance() {
@@ -25,27 +25,18 @@ public class Lesson implements Serializable {
         return fitnessActivity;
     }
 
-    public void setFitnessActivity(FitnessActivity fitnessActivity) {
-        this.fitnessActivity = fitnessActivity;
-    }
 
     public String getDateSlot() {
         return dateSlot;
     }
 
-    public void setDateSlot(String dateSlot) {
-        this.dateSlot = dateSlot;
-    }
 
-    public int getNumberOfBookings() {
-        return numberOfBookings;
-    }
 
     public void updateNumberOfBookings(String order) {
         if (order.equals("increase")){
             this.numberOfBookings += 1;
         } else if (order.equals("decrease")) {
-            if(isFilled()){
+            if(this.isFilled){
                 this.fitnessActivity.addLesson(this);
             }
             this.numberOfBookings -= 1;
@@ -58,13 +49,7 @@ public class Lesson implements Serializable {
         }
     }
 
-    public ArrayList<Rating> getReviews() {
-        return reviews;
-    }
 
-    public void setReviews(ArrayList<Rating> reviews) {
-        this.reviews = reviews;
-    }
 
     public Lesson(FitnessActivity fitnessActivity, String dateSlot) {
         this.fitnessActivity = fitnessActivity;
@@ -72,7 +57,7 @@ public class Lesson implements Serializable {
         this.numberOfBookings = 0;
         this.numberOfAttendance = 0;
         this.isFilled = false;
-        this.reviews = new ArrayList<Rating>();
+        this.reviews = new ArrayList<>();
         fitnessActivity.addLesson(this);
     }
 
@@ -96,7 +81,7 @@ public class Lesson implements Serializable {
     }
 
     public boolean isFilled(){
-        return this.numberOfBookings >= this.CAPACITY;
+        return this.numberOfBookings >= CAPACITY;
     }
 
     public String lessonToString(){

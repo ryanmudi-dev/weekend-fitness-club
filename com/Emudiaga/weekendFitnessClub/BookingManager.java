@@ -4,20 +4,8 @@ import java.io.Serializable;
 import java.util.HashMap;
 
 public class BookingManager implements Serializable {
-    private HashMap<String, Booking> bookingHashMap;
+    private final HashMap<String, Booking> bookingHashMap;
     private int lastBooking;
-
-    public int getLastBooking() {
-        return lastBooking;
-    }
-
-    public void setLastBooking(int lastBooking) {
-        this.lastBooking = lastBooking;
-    }
-
-    public HashMap<String, Booking> getBookings() {
-        return bookingHashMap;
-    }
 
     public BookingManager() {
         this.bookingHashMap = new HashMap<>();
@@ -25,7 +13,7 @@ public class BookingManager implements Serializable {
     }
 
     private String bookingIdGenerator(){
-        return "booking" + (int)(this.lastBooking + 1);
+        return "booking" + (this.lastBooking + 1);
     }
 
     public String registerBooking(Customer customer, Lesson lesson){
@@ -38,10 +26,6 @@ public class BookingManager implements Serializable {
         this.lastBooking += 1;
         return newBookingId;
 
-    }
-
-    public void removeBooking(String bookingId){
-        bookingHashMap.remove(bookingId);
     }
 
     public boolean cancelBooking(Booking booking){

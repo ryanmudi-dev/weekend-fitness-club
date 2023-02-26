@@ -10,6 +10,11 @@ import java.util.Scanner;
 
 public class AppManager implements Serializable {
     transient Scanner scanner = new Scanner(System.in);
+
+    public void setScanner(Scanner scanner) {
+        this.scanner = scanner;
+    }
+
     CalenderManager calenderManager = new CalenderManager();
     BookingManager bookingManager = new BookingManager();
     CustomersManager customersManager = new CustomersManager();
