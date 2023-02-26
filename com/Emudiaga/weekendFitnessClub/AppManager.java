@@ -92,7 +92,7 @@ public class AppManager implements Serializable {
                 Scanner stringScanner = new Scanner(System.in);
                 String review = stringScanner.nextLine();
                 Rating customerRating = new Rating(rating, review);
-                this.bookingManager.attendBookedLesson(this.currentCustomer, booking, customerRating);
+                this.bookingManager.attendBookedLesson(booking, customerRating);
                 System.out.println("Thank You for sharing your feedback\n");
             } else if(response == 2){
                 boolean continueManage = true;

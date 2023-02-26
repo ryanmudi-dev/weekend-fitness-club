@@ -44,7 +44,7 @@ public class BookingManager implements Serializable {
         }
     }
 
-    public void attendBookedLesson(Customer customer, Booking booking, Rating rating){
+    public void attendBookedLesson(Booking booking, Rating rating){
         /** Provide Customer, Booking and Rating Objects */
 
         booking.setStatus("attended");
