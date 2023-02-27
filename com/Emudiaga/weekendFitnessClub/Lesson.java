@@ -98,7 +98,7 @@ public class Lesson implements Serializable {
         } else {
             day = "Sunday";
         }
-        return "Week " + weekSlice + " of " + month + ": " + day + ", Session " + sessionOfTheDaySlice + ": " + this.getFitnessActivity().getActivityName();
+        return "Week " + weekSlice + " of " + month + ": " + day + ", Session " + sessionOfTheDaySlice + ": " + this.getFitnessActivity().getActivityName() + " ------ £" + String.valueOf(this.getFitnessActivity().getPrice());
 
     }
 
