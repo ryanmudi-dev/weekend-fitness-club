@@ -416,7 +416,7 @@ public class AppManager implements Serializable {
             int customerResponse = 100;
 
                 do{
-                    if (this.getCurrentCustomer().getCurrentBookedLessons().size() == 0){
+                    if (this.getCurrentCustomer().currentBookingsToString().size() == 0){
                         System.out.println("Enter an Option:\n[1] Book New Lesson\n[-1] Sign Out\n[0] Exit App");
                         temp = 1;
                     } else{
