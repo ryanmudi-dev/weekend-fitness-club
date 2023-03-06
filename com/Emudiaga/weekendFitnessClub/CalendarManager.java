@@ -5,7 +5,7 @@ import java.text.DateFormatSymbols;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class CalenderManager implements Serializable {
+public class CalendarManager implements Serializable {
 
 
     //____________________________ Activities _____________________________________
@@ -30,11 +30,11 @@ public class CalenderManager implements Serializable {
         };
     }
 
-    public CalenderManager() {
+    public CalendarManager() {
 
         this.lessonsByMonth = new HashMap<>();
 
-        //------------------------------------Calender-------------------------------------//
+        //------------------------------------Calendar-------------------------------------//
 
         //----------------------------------March-------------------------------------------//
         this.createNewLesson(this.yoga, 3,1,1,1);

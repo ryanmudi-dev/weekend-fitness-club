@@ -15,10 +15,10 @@ public class AppManager implements Serializable {
         this.scanner = scanner;
     }
 
-    CalenderManager calenderManager = new CalenderManager();
+    CalendarManager calendarManager = new CalendarManager();
     BookingManager bookingManager = new BookingManager();
     CustomersManager customersManager = new CustomersManager();
-    ReportManager reportManager = new ReportManager(calenderManager);
+    ReportManager reportManager = new ReportManager(calendarManager);
     private Customer currentCustomer = null;
     private final static String filePath = "com/Emudiaga/weekendFitnessClub/Serialization/appState.dat";
 
@@ -195,9 +195,9 @@ public class AppManager implements Serializable {
             }else if(responseView == 0){
                 this.exitApp();
             } else if(responseView == 1){
-                availableLessons = this.calenderManager.getAvailableLessons("Saturday");
+                availableLessons = this.calendarManager.getAvailableLessons("Saturday");
             } else if (responseView == 2){
-                availableLessons = this.calenderManager.getAvailableLessons("Sunday");
+                availableLessons = this.calendarManager.getAvailableLessons("Sunday");
             }
 
         } else if (responseView == 2){
@@ -219,20 +219,20 @@ public class AppManager implements Serializable {
             if(responseView == -1){
                 return this.chooseLesson(temp, true);
             }else if (responseView == 1){
-                availableLessons = this.calenderManager.getAvailableLessons(this.calenderManager.getSpecificActivity("Yoga"));
+                availableLessons = this.calendarManager.getAvailableLessons(this.calendarManager.getSpecificActivity("Yoga"));
             } else if (responseView == 2){
-                availableLessons = this.calenderManager.getAvailableLessons(this.calenderManager.getSpecificActivity("Spin"));
+                availableLessons = this.calendarManager.getAvailableLessons(this.calendarManager.getSpecificActivity("Spin"));
             } else if (responseView == 3){
-                availableLessons = this.calenderManager.getAvailableLessons(this.calenderManager.getSpecificActivity("Zumba"));
+                availableLessons = this.calendarManager.getAvailableLessons(this.calendarManager.getSpecificActivity("Zumba"));
             } else if (responseView == 4) {
-                availableLessons = this.calenderManager.getAvailableLessons(this.calenderManager.getSpecificActivity("Aquacise"));
+                availableLessons = this.calendarManager.getAvailableLessons(this.calendarManager.getSpecificActivity("Aquacise"));
             } else if(responseView == 0){
                 this.exitApp();
             }
 
         }
         assert availableLessons != null;
-        ArrayList<String> printableLessons = this.calenderManager.convertLessonArrayToDateStringsArray(availableLessons);
+        ArrayList<String> printableLessons = this.calendarManager.convertLessonArrayToDateStringsArray(availableLessons);
         do {
 
             responseView = 100;
@@ -328,7 +328,7 @@ public class AppManager implements Serializable {
     }
 
 
-    public void fullAppLogic() throws IOException {
+    public void fullApp() throws IOException {
         Scanner mainScanner = new Scanner(System.in);
 
 
@@ -362,7 +362,7 @@ public class AppManager implements Serializable {
                     } else{
                         System.out.println("Please enter the month you want the Champion Report generated for (E.g. '3' for March) or enter [-1] to go back");
                     }
-                    for (String month : calenderManager.lessonByMonthToString()) {
+                    for (String month : calendarManager.lessonByMonthToString()) {
                         System.out.println("Enter " + month);
                     }
 
@@ -377,7 +377,7 @@ public class AppManager implements Serializable {
                 } while ((mainUserResponse < 1 || mainUserResponse > 12) && mainUserResponse != -1);
 
                 if (mainUserResponse == -1) {
-                    this.fullAppLogic();
+                    this.fullApp();
                 }
                 if (tempSave == 3) {
                     String report = reportManager.getMonthlyLessonReport(mainUserResponse);
@@ -397,12 +397,12 @@ public class AppManager implements Serializable {
 
                 }
                 if (tempcontinue){
-                    System.out.println("The month you entered is not available on the calender, please enter one of the months listed.");
+                    System.out.println("The month you entered is not available on the calendar, please enter one of the months listed.");
                 }
 
             } while (tempcontinue);
             System.out.println();
-            fullAppLogic();
+            fullApp();
 
         } else {
             if (mainUserResponse == 1) {
@@ -437,7 +437,7 @@ public class AppManager implements Serializable {
 
             } else if (customerResponse == -1) {
                 this.setCurrentCustomer(null);
-                this.fullAppLogic();
+                this.fullApp();
             }
 
             this.appLogicExtension(customerResponse);

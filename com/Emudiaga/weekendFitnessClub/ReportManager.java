@@ -2,18 +2,27 @@ package com.Emudiaga.weekendFitnessClub;
 
 import java.io.Serializable;
 import java.text.DateFormatSymbols;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Objects;
 
 public class ReportManager implements Serializable {
-    private final CalenderManager calenderManager;
+    private final CalendarManager calendarManager;
 
-    public ReportManager(CalenderManager calenderManager) {
-        this.calenderManager = calenderManager;
+    /**
+     * @param calendarManager Calendar Manager object of the app.
+     */
+    public ReportManager(CalendarManager calendarManager) {
+        this.calendarManager = calendarManager;
     }
 
+    /**
+     * @param month month number in int
+     * @return report for that month
+     */
     public String getMonthlyLessonReport(int month){
         StringBuilder monthlyReport = new StringBuilder();
-        ArrayList<Lesson> lessonsForTheMonth = this.calenderManager.getLessonsByMonth().get(month);
+        ArrayList<Lesson> lessonsForTheMonth = this.calendarManager.getLessonsByMonth().get(month);
         if (lessonsForTheMonth == null){
             return null;
         }
@@ -25,15 +34,19 @@ public class ReportManager implements Serializable {
         return monthlyReport.toString();
     }
 
+    /**
+     * @param month month number in int
+     * @return Champion report for that month
+     */
     public String getMonthlyChampionFitnessReport(int month){
         StringBuilder monthlyReport = new StringBuilder();
         HashMap<FitnessActivity, Float> activitiesIncome = new HashMap<>();
-        activitiesIncome.put(calenderManager.getSpecificActivity("Yoga"), (float) 0);
-        activitiesIncome.put(calenderManager.getSpecificActivity("Spin"), (float) 0);
-        activitiesIncome.put(calenderManager.getSpecificActivity("Zumba"), (float) 0);
-        activitiesIncome.put(calenderManager.getSpecificActivity("Aquacise"), (float) 0);
+        activitiesIncome.put(calendarManager.getSpecificActivity("Yoga"), (float) 0);
+        activitiesIncome.put(calendarManager.getSpecificActivity("Spin"), (float) 0);
+        activitiesIncome.put(calendarManager.getSpecificActivity("Zumba"), (float) 0);
+        activitiesIncome.put(calendarManager.getSpecificActivity("Aquacise"), (float) 0);
 
-        ArrayList<Lesson> currentLessons = calenderManager.getLessonsByMonth().get(month);
+        ArrayList<Lesson> currentLessons = calendarManager.getLessonsByMonth().get(month);
         if (currentLessons == null){
             return null;
         }
@@ -44,7 +57,7 @@ public class ReportManager implements Serializable {
             activitiesIncome.replace(currentLesson.getFitnessActivity(), currentTotal + income);
         }
 
-        FitnessActivity championActivity = calenderManager.getSpecificActivity("Yoga");
+        FitnessActivity championActivity = calendarManager.getSpecificActivity("Yoga");
         for (FitnessActivity currentActivity : activitiesIncome.keySet()){
             if (activitiesIncome.get(currentActivity) > activitiesIncome.get(championActivity)){
                 championActivity = currentActivity;
