@@ -284,6 +284,7 @@ public class AppManager implements Serializable {
     public void bookALesson(int customerResponse) throws IOException {
         String newBookingID = this.bookingManager.registerBooking(this.currentCustomer, this.chooseLesson(customerResponse, false));
         System.out.println("Lesson Booked Successfully.\nYour New Booking ID is '" + newBookingID + "'\n");
+        newBookingID = null;
     }
 
     /**
@@ -413,6 +414,7 @@ public class AppManager implements Serializable {
                         System.out.println("\n-----------------MONTHLY REPORT-----------------\n");
                         System.out.println(report);
                         tempcontinue = false;
+                        report = null;
                     }
 
                 } else {
@@ -421,6 +423,7 @@ public class AppManager implements Serializable {
                         System.out.println("\n--------------------------MONTHLY CHAMPION REPORT--------------------------\n");
                         System.out.println(report);
                         tempcontinue = false;
+                        report = null;
                     }
 
                 }
@@ -507,6 +510,7 @@ public class AppManager implements Serializable {
                     for (String currentBooking : currentBookingsString){
                         System.out.println(currentBooking);
                     }
+                    currentBookingsString = null;
                     System.out.println();
                     System.out.println("Please Enter the Booking ID you want to manage or Type 'Exit' to Exit the App:");
                     bookingID = mainStringScanner.next();

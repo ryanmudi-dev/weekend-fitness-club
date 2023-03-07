@@ -9,6 +9,11 @@ public class Lesson implements Serializable {
     private final String dateSlot;
     final static int CAPACITY = 5;
     private int numberOfBookings;
+
+    public int getNumberOfBookings() {
+        return numberOfBookings;
+    }
+
     private int numberOfAttendance;
     private final ArrayList<Rating> reviews;
     private boolean isFilled;
