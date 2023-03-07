@@ -12,10 +12,18 @@ public class BookingManager implements Serializable {
         this.lastBooking = 0;
     }
 
+    /**
+     * @return generated unique IDs for each new bookings
+     */
     private String bookingIdGenerator(){
         return "booking" + (this.lastBooking + 1);
     }
 
+    /**
+     * @param customer Customer object registering the new booking
+     * @param lesson The lesson chosen by the customer
+     * @return the booking ID of the newly created booking
+     */
     public String registerBooking(Customer customer, Lesson lesson){
         String newBookingId = bookingIdGenerator();
         Booking newBooking = new Booking(newBookingId, customer, lesson);
@@ -28,6 +36,9 @@ public class BookingManager implements Serializable {
 
     }
 
+    /**
+     * @param booking the booking to be cancelled
+     */
     public void cancelBooking(Booking booking){
         booking.setStatus("cancelled");
         Lesson lesson = booking.getLesson();
@@ -36,6 +47,10 @@ public class BookingManager implements Serializable {
         lesson.updateNumberOfBookings("decrease");
     }
 
+    /**
+     * @param bookingId booking ID in string
+     * @return booking object with the provided booking ID
+     */
     public Booking getSpecificBooking(String bookingId){
         try {
             return bookingHashMap.get(bookingId);

@@ -33,6 +33,9 @@ public class AppManager implements Serializable {
     public AppManager() throws IOException {
     }
 
+    /**
+     * User interaction for registering new user
+     */
     public void newUserRegister(){
         System.out.println("Enter First Name");
         String firstName = scanner.next();
@@ -63,6 +66,11 @@ public class AppManager implements Serializable {
 
     }
 
+    /**
+     * @param booking Booking object to be managed
+     * @throws IOException output exception
+     * User interaction for managing a booking
+     */
     public void manageBooking(Booking booking) throws IOException {
         System.out.println("Enter An Option:\n[1] Attend Booking\n[2] Modify Booking\n[0] Exit App");
         int response = 100;
@@ -164,6 +172,12 @@ public class AppManager implements Serializable {
     }
 
 
+    /**
+     * @param responseView response from user
+     * @param calledFromWithin boolean for checking where it was called from
+     * @return a lesson object for the lesson chosen by the user
+     * @throws IOException exception handling
+     */
     public Lesson chooseLesson(int responseView, boolean calledFromWithin) throws IOException {
         /** Lists all available lessons and return selected lesson given a response*/
         if (calledFromWithin){
@@ -272,6 +286,10 @@ public class AppManager implements Serializable {
         System.out.println("Lesson Booked Successfully.\nYour New Booking ID is '" + newBookingID + "'\n");
     }
 
+    /**
+     * @throws IOException
+     * Saves the state of the App before exit
+     */
     public void saveWfcAppState() throws IOException{
         try{
             FileOutputStream fos = new FileOutputStream(filePath);
@@ -284,6 +302,10 @@ public class AppManager implements Serializable {
         }
     }
 
+    /**
+     * @throws IOException
+     * User interaction for returning users
+     */
     public void signInRegisteredUser() throws IOException {
         Customer returningCustomer;
         do {
@@ -328,8 +350,14 @@ public class AppManager implements Serializable {
     }
 
 
+    /**
+     * @throws IOException
+     * User Interaction
+     */
     public void fullApp() throws IOException {
         Scanner mainScanner = new Scanner(System.in);
+
+        System.out.println("-----------------Weekend Fitness Club-----------------\n");
 
 
         int mainUserResponse = 100;

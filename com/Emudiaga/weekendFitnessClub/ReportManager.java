@@ -29,7 +29,7 @@ public class ReportManager implements Serializable {
         for(Lesson lesson : lessonsForTheMonth){
             float averageRating = lesson.getAverageRating();
             int attendance = lesson.getNumberOfAttendance();
-            monthlyReport.append(lesson.lessonToString()).append("\n").append("Number of Attendees: ").append(attendance).append(" | Average Rating: ").append(averageRating).append("/5.0\n------------------------------------------------\n");
+            monthlyReport.append(lesson.lessonToString().substring(0, lesson.lessonToString().length() - 12)).append("\n").append("Number of Attendees: ").append(attendance).append(" | Average Rating: ").append(averageRating).append("/5.0\n------------------------------------------------\n");
         }
         return monthlyReport.toString();
     }

@@ -74,6 +74,9 @@ public class Customer implements Serializable {
         this.currentBookings.remove(booking);
     }
 
+    /**
+     * @return an array of all current open booking of the customer as as strings
+     */
     public ArrayList<String> currentBookingsToString(){
         ArrayList<String> currentBookingsString = new ArrayList<>();
         for (Booking currentBooking : this.getCurrentBookings()){

@@ -2,6 +2,9 @@ package com.Emudiaga.weekendFitnessClub;
 
 import java.io.Serializable;
 
+/**
+ * The Class for creating each booking as object
+ */
 public class Booking implements Serializable {
     private String bookingId;
     private Customer customer;
