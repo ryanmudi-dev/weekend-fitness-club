@@ -13,7 +13,7 @@ public class BookingManager implements Serializable {
     }
 
     /**
-     * @return generated unique IDs for each new bookings
+     * @return generate unique IDs for each new bookings
      */
     private String bookingIdGenerator(){
         return "booking" + (this.lastBooking + 1);
