@@ -8,13 +8,18 @@ import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+/**
+
+ The AppManager class is responsible for managing the overall application.
+ It interacts with other manager classes such as CalendarManager, BookingManager,
+ CustomersManager and ReportManager to perform various tasks.
+ It also manages the current user/customer information and provides user interaction for
+ registering new users, signing in returning users, registering new booking, managing current bookings and generating reports.
+ The class manages all User Interactions
+ */
+
 public class AppManager implements Serializable {
     transient Scanner scanner = new Scanner(System.in);
-
-    public void setScanner(Scanner scanner) {
-        this.scanner = scanner;
-    }
-
     CalendarManager calendarManager = new CalendarManager();
     BookingManager bookingManager = new BookingManager();
     CustomersManager customersManager = new CustomersManager();
@@ -22,19 +27,44 @@ public class AppManager implements Serializable {
     private Customer currentCustomer = null;
     private final static String filePath = "com/Emudiaga/weekendFitnessClub/Serialization/appState.dat";
 
-    public Customer getCurrentCustomer() {
-        return this.currentCustomer;
-    }
-
-    public void setCurrentCustomer(Customer currentCustomer) {
-        this.currentCustomer = currentCustomer;
-    }
 
     public AppManager() throws IOException {
     }
 
+
     /**
-     * User interaction for registering new user
+
+     Setter method to set the scanner object
+     @param scanner Scanner object to set
+     */
+    public void setScanner(Scanner scanner) {
+        this.scanner = scanner;
+    }
+
+    /**
+
+     Getter method to get the current customer
+     @return Customer object representing the current user
+     */
+    public Customer getCurrentCustomer() {
+        return this.currentCustomer;
+    }
+    /**
+
+     Setter method to set the current customer
+     @param currentCustomer Customer object representing the current user to set
+     */
+    public void setCurrentCustomer(Customer currentCustomer) {
+        this.currentCustomer = currentCustomer;
+    }
+
+
+    /**
+
+     Method to register a new user. It prompts the user for their first name, last name, and email address.
+     It validates the email address and creates a new customer account if the email is valid and the user
+     does not already have an account. Otherwise, it informs the user that they already have an account registered.
+     It sets the current customer to the newly registered customer.
      */
     public void newUserRegister(){
         System.out.println("Enter First Name");
@@ -66,10 +96,13 @@ public class AppManager implements Serializable {
 
     }
 
+
+
     /**
-     * @param booking Booking object to be managed
-     * @throws IOException output exception
-     * User interaction for managing a booking
+
+     This method allows the user to manage a specific booking by attending, modifying, or canceling it.
+     @param booking the Booking object to be managed
+     @throws IOException If an I/O error occurs
      */
     public void manageBooking(Booking booking) throws IOException {
         System.out.println("Enter An Option:\n[1] Attend Booking\n[2] Modify Booking\n[0] Exit App");
@@ -172,14 +205,17 @@ public class AppManager implements Serializable {
     }
 
 
+
     /**
-     * @param responseView response from user
-     * @param calledFromWithin boolean for checking where it was called from
-     * @return a lesson object for the lesson chosen by the user
-     * @throws IOException exception handling
+
+     Lists all available lessons and returns the selected lesson based on the user's input.
+     @param responseView the user's response to the view options (1 for view by day of the week, 2 for view by fitness activity)
+     @param calledFromWithin a boolean indicating whether the method was called from within itself
+     @return the selected lesson
+     @throws IOException if an I/O error occurs
      */
     public Lesson chooseLesson(int responseView, boolean calledFromWithin) throws IOException {
-        /** Lists all available lessons and return selected lesson given a response*/
+        // If calledFromWithin is true, prompt the user to select a view option
         if (calledFromWithin){
             System.out.println("Please select how you want to view the available lessons.\nEnter an Option\n[1] View by Day of the Week\n[2] View by Fitness Activity\n[-1] Go Back");
             responseView = scanner.nextInt();
@@ -281,15 +317,27 @@ public class AppManager implements Serializable {
         return availableLessons.get(responseView-1);
     }
 
+
+    /**
+
+     Allows the current customer to book a lesson by registering a new booking in the booking manager.
+     Prints out the new booking ID once the lesson is successfully booked.
+     @param customerResponse the response received from the customer in choosing a lesson.
+     @throws IOException if an I/O error occurs.
+     */
+
     public void bookALesson(int customerResponse) throws IOException {
         String newBookingID = this.bookingManager.registerBooking(this.currentCustomer, this.chooseLesson(customerResponse, false));
         System.out.println("Lesson Booked Successfully.\nYour New Booking ID is '" + newBookingID + "'\n");
         newBookingID = null;
     }
 
+
     /**
-     * @throws IOException
-     * Saves the state of the App before exit
+
+     Saves the current state of the WFC app to a file specified by the filePath field.
+     Uses object serialization to save the current state.
+     @throws IOException If an I/O error occurs while writing to the file.
      */
     public void saveWfcAppState() throws IOException{
         try{
@@ -303,9 +351,15 @@ public class AppManager implements Serializable {
         }
     }
 
+
     /**
-     * @throws IOException
-     * User interaction for returning users
+
+     Prompts the user to enter their email address and signs in the corresponding registered user.
+     If the user enters an invalid email address, they will be prompted to enter a valid one.
+     If the user types "Exit", the app will exit.
+     If the email address entered is not associated with any registered user, the user will be prompted to enter a valid email address.
+     Upon successful sign-in, sets the current customer to the returning customer and prints a welcome message.
+     @throws IOException If an I/O error occurs while getting customer information or exiting the app.
      */
     public void signInRegisteredUser() throws IOException {
         Customer returningCustomer;
@@ -334,16 +388,27 @@ public class AppManager implements Serializable {
         System.out.println("Welcome back " + this.getCurrentCustomer().getCustomerName());
 
     }
-    //
-    public void signOutCurrentUser(){
+
+
+    /**
+
+     Signs out the current user by setting the current customer to null.
+     */
+    public void signOutCurrentUser() {
         this.setCurrentCustomer(null);
     }
 
+
+    /**
+     * Exits the application after saving the current state.
+     *
+     * @throws IOException if there is an error while saving the state
+     */
     public void exitApp() throws IOException {
-        if (this.getCurrentCustomer() != null){
+        if (this.getCurrentCustomer() != null) {
             System.out.println("Thank you " + this.getCurrentCustomer().getCustomerName() + ", and hope you will be back soon");
             this.signOutCurrentUser();
-        } else{
+        } else {
             System.out.println("Thank you, and hope you will be back soon");
         }
         this.saveWfcAppState();
@@ -351,9 +416,18 @@ public class AppManager implements Serializable {
     }
 
 
+
     /**
-     * @throws IOException
-     * User Interaction
+
+     This method represents the full application logic of the Weekend Fitness Club application.
+     It displays a menu to the user with options to sign up, sign in, generate monthly lesson report, generate monthly champion fitness type report, book new lesson, manage current booking, sign out or exit the app.
+     It takes user input from the console and calls the appropriate methods based on the user's selection.
+     If the user inputs invalid input, the method will prompt the user to input a valid input.
+     If the user selects to generate a report, the method will prompt the user to enter the month they want a report for and generate the report using the report manager.
+     If the user selects to book a new lesson or manage their current booking, the method will call the appLogicExtension method to handle the booking.
+     If the user selects to sign out, the method sets the current customer to null and calls the fullApp method to display the menu again.
+     If the user selects to exit the app, the method calls the exitApp method.
+     @throws IOException If there is an error with the input/output of the program.
      */
     public void fullApp() throws IOException {
         Scanner mainScanner = new Scanner(System.in);

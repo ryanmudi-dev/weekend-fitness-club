@@ -6,19 +6,28 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
 
+/**
+
+ This class represents a report manager which generates different reports based on the monthly lessons and income for fitness activities.
+ It contains methods to generate monthly lesson report and monthly champion fitness report.
+ */
+
 public class ReportManager implements Serializable {
     private final CalendarManager calendarManager;
 
     /**
-     * @param calendarManager Calendar Manager object of the app.
+     * Constructor to create a ReportManager object.
+     * @param calendarManager the calendar manager used to access lesson information
      */
     public ReportManager(CalendarManager calendarManager) {
         this.calendarManager = calendarManager;
     }
 
+
     /**
-     * @param month month number in int
-     * @return report for that month
+     * Method to generate a monthly lesson report for a specific month.
+     * @param month the month to generate the report for
+     * @return a string representing the monthly lesson report
      */
     public String getMonthlyLessonReport(int month){
         StringBuilder monthlyReport = new StringBuilder();
@@ -34,9 +43,11 @@ public class ReportManager implements Serializable {
         return monthlyReport.toString();
     }
 
+
     /**
-     * @param month month number in int
-     * @return Champion report for that month
+     * Method to generate a monthly champion fitness report for a specific month.
+     * @param month the month to generate the report for
+     * @return a string representing the monthly champion fitness report
      */
     public String getMonthlyChampionFitnessReport(int month){
         StringBuilder monthlyReport = new StringBuilder();
@@ -101,6 +112,12 @@ public class ReportManager implements Serializable {
 
         monthlyReport.append("The Highest grossing Fitness").append(string0).append(" for ").append(monthString).append(string1).append(championsName).append(" with a total of £").append(activitiesIncome.get(championActivity)).append(string2).append(".\nThe Income for the other activities are listed below:\n").append(otherActivities);
 
+        activitiesIncome = null;
+        currentLessons = null;
+        championActivity = null;
+        monthString = null;
+        champions = null;
+        championsName = null;
         return monthlyReport.toString();
     }
 }

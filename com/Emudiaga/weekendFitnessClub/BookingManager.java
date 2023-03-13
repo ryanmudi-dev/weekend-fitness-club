@@ -59,17 +59,27 @@ public class BookingManager implements Serializable {
         }
     }
 
-    public void attendBookedLesson(Booking booking, Rating rating){
-        /** Provide Customer, Booking and Rating Objects */
+    /**
 
+     Attends a previously booked lesson and records the rating given by the customer.
+     @param booking The booking to attend.
+     @param rating The rating given by the customer.
+     */
+    public void attendBookedLesson(Booking booking, Rating rating){
         booking.setStatus("attended");
         booking.setRating(rating);
         booking.getLesson().addRating(rating);
         booking.getLesson().addAttendance();
     }
+    /**
 
+     Changes a previously booked lesson to a new lesson for a customer.
+     @param customer The customer whose booking is being changed.
+     @param booking The booking to change.
+     @param oldLesson The lesson previously booked by the customer.
+     @param newLesson The new lesson to book.
+     */
     public void changeBookedLesson(Customer customer, Booking booking, Lesson oldLesson, Lesson newLesson){
-        /** Provide Customer, Booking, Old Lesson and the new Lesson Objects */
         booking.setLesson(newLesson);
         booking.setStatus("changed");
         newLesson.updateNumberOfBookings("increase");
@@ -77,10 +87,15 @@ public class BookingManager implements Serializable {
         customer.removeLesson(oldLesson);
         customer.addLesson(newLesson);
     }
+    /**
 
+     Verifies that a given booking ID is valid for the current customer.
+     @param customer The customer whose booking ID is being verified.
+     @param bookingId The booking ID to verify.
+     @return True if the booking ID is valid for the current customer, false otherwise.
+     */
     public boolean verifyBookingId(Customer customer, String bookingId){
         return this.bookingHashMap.containsKey(bookingId) && customer.currentBookedLessons().contains(this.bookingHashMap.get(bookingId).getLesson());
     }
-
 
 }
