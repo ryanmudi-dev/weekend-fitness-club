@@ -1,7 +1,7 @@
-package com.Emudiaga.test;
+package com.WFC.test;
 
-import com.Emudiaga.weekendFitnessClub.Customer;
-import com.Emudiaga.weekendFitnessClub.CustomersManager;
+import com.WFC.weekendFitnessClub.Customer;
+import com.WFC.weekendFitnessClub.CustomersManager;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

@@ -1,4 +1,4 @@
-package com.Emudiaga.weekendFitnessClub;
+package com.WFC.weekendFitnessClub;
 
 /**
  * The main class for the Weekend Fitness Club application. This class loads the AppManager object from a file, or creates a new instance if the file is not found or cannot be read. It then runs the full app logic.
@@ -7,7 +7,7 @@ import java.io.*;
 import java.util.Scanner;
 
 public class WFCApp implements Serializable {
-    private final static String filePath = "com/Emudiaga/weekendFitnessClub/Serialization/appState.dat";
+    private final static String filePath = "com/WFC/weekendFitnessClub/Serialization/appState.dat";
 
     /**
      * The main method for the Weekend Fitness Club application. Loads the AppManager object from a file, or creates a new instance if the file is not found or cannot be read. It then runs the full app logic.

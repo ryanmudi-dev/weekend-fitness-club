@@ -1,4 +1,4 @@
-package com.Emudiaga.weekendFitnessClub;
+package com.WFC.weekendFitnessClub;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -25,7 +25,7 @@ public class AppManager implements Serializable {
     CustomersManager customersManager = new CustomersManager();
     ReportManager reportManager = new ReportManager(calendarManager);
     private Customer currentCustomer = null;
-    private final static String filePath = "com/Emudiaga/weekendFitnessClub/Serialization/appState.dat";
+    private final static String filePath = "com/WFC/weekendFitnessClub/Serialization/appState.dat";
 
 
     public AppManager() throws IOException {
@@ -347,7 +347,7 @@ public class AppManager implements Serializable {
             oos.close();
             fos.close();
         } catch(Exception e) {
-            System.out.println(e);
+            System.out.println(e.getMessage());
         }
     }
 
@@ -521,7 +521,7 @@ public class AppManager implements Serializable {
             int customerResponse = 100;
 
                 do{
-                    if (this.getCurrentCustomer().currentBookingsToString().size() == 0){
+                    if (!this.getCurrentCustomer().hasBooking()){
                         System.out.println("Enter an Option:\n[1] Book New Lesson\n[-1] Sign Out\n[0] Exit App");
                         temp = 1;
                     } else{

@@ -1,8 +1,8 @@
-package com.Emudiaga.test;
+package com.WFC.test;
 
-import com.Emudiaga.weekendFitnessClub.CalendarManager;
-import com.Emudiaga.weekendFitnessClub.FitnessActivity;
-import com.Emudiaga.weekendFitnessClub.Lesson;
+import com.WFC.weekendFitnessClub.CalendarManager;
+import com.WFC.weekendFitnessClub.FitnessActivity;
+import com.WFC.weekendFitnessClub.Lesson;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

@@ -1,4 +1,4 @@
-package com.Emudiaga.weekendFitnessClub;
+package com.WFC.weekendFitnessClub;
 
 import java.io.Serializable;
 import java.util.ArrayList;

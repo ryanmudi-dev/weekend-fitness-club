@@ -1,4 +1,4 @@
-package com.Emudiaga.weekendFitnessClub;
+package com.WFC.weekendFitnessClub;
 
 /**
  * Represents a booking made by a customer for a lesson at the Weekend Fitness Club.
