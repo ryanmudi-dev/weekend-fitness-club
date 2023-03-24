@@ -100,14 +100,6 @@ public class Customer implements Serializable {
         this.customerName = customerName;
     }
 
-    /**
-     * Returns the currently booked lessons of the customer
-     * @return an ArrayList of currently booked lessons
-     */
-    public ArrayList<Lesson> currentBookedLessons() {
-        return bookedLessons;
-    }
-
 
     /**
      * Adds a lesson to the customer's list of booked lessons

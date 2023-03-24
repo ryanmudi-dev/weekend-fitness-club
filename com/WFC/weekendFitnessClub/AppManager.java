@@ -308,10 +308,10 @@ public class AppManager implements Serializable {
                 }
             } while (responseView < 1 || responseView > LessonsLength);
 
-            if(this.currentCustomer.currentBookedLessons().contains(availableLessons.get(responseView-1))){
+            if(this.currentCustomer.getCurrentBookedLessons().contains(availableLessons.get(responseView-1))){
                 System.out.println("You already have this lesson booked");
             }
-        } while(this.currentCustomer.currentBookedLessons().contains(availableLessons.get(responseView-1)));
+        } while(this.currentCustomer.getCurrentBookedLessons().contains(availableLessons.get(responseView-1)));
 
 
         return availableLessons.get(responseView-1);

@@ -144,7 +144,7 @@ public class Lesson implements Serializable {
 
     /**
 
-     Determines whether or not this Lesson is filled to capacity.
+     Determines whether this Lesson is filled to capacity.
      @return True if the number of bookings for this Lesson is equal to or greater than the capacity, false otherwise.
      */
     public boolean isFilled(){

@@ -95,7 +95,7 @@ public class BookingManager implements Serializable {
      @return True if the booking ID is valid for the current customer, false otherwise.
      */
     public boolean verifyBookingId(Customer customer, String bookingId){
-        return this.bookingHashMap.containsKey(bookingId) && customer.currentBookedLessons().contains(this.bookingHashMap.get(bookingId).getLesson());
+        return this.bookingHashMap.containsKey(bookingId) && customer.getCurrentBookedLessons().contains(this.bookingHashMap.get(bookingId).getLesson());
     }
 
 }

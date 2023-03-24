@@ -18,7 +18,7 @@ public class WFCApp implements Serializable {
     public static void main(String[] args) throws IOException {
         AppManager appManager = null;
 
-        /*----------------------------Load AppManager Object from File---------------*/
+        /*----------------------------Load AppManager Object from File if it exist---------------*/
         try {
             FileInputStream fis = new FileInputStream(filePath);
             ObjectInputStream ois = new ObjectInputStream(fis);
