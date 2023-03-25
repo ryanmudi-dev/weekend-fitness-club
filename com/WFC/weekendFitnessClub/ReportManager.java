@@ -30,6 +30,8 @@ public class ReportManager implements Serializable {
      * @return a string representing the monthly lesson report
      */
     public String getMonthlyLessonReport(int month){
+        validateMonth(month);
+
         StringBuilder monthlyReport = new StringBuilder();
         ArrayList<Lesson> lessonsForTheMonth = this.calendarManager.getLessonsByMonth().get(month);
         if (lessonsForTheMonth == null){
@@ -50,6 +52,8 @@ public class ReportManager implements Serializable {
      * @return a string representing the monthly champion fitness report
      */
     public String getMonthlyChampionFitnessReport(int month){
+        validateMonth(month);
+
         StringBuilder monthlyReport = new StringBuilder();
         HashMap<FitnessActivity, Float> activitiesIncome = new HashMap<>();
         activitiesIncome.put(calendarManager.getSpecificActivity("Yoga"), (float) 0);
@@ -112,12 +116,12 @@ public class ReportManager implements Serializable {
 
         monthlyReport.append("The Highest grossing Fitness").append(string0).append(" for ").append(monthString).append(string1).append(championsName).append(" with a total of £").append(activitiesIncome.get(championActivity)).append(string2).append(".\nThe Income for the other activities are listed below:\n").append(otherActivities);
 
-        activitiesIncome = null;
-        currentLessons = null;
-        championActivity = null;
-        monthString = null;
-        champions = null;
-        championsName = null;
         return monthlyReport.toString();
+    }
+
+    private void validateMonth(int month) {
+        if (month < 1 || month > 12) {
+            throw new IllegalArgumentException("Invalid month argument");
+        }
     }
 }

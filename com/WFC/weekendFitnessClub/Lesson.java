@@ -88,9 +88,14 @@ public class Lesson implements Serializable {
      */
 
     public void updateNumberOfBookings(String order) {
-        if (order.equals("increase")){
+
+        if (!order.equalsIgnoreCase("decrease") && !order.equalsIgnoreCase("increase")) {
+            throw new IllegalArgumentException("Invalid order");
+        }
+
+        if (order.equalsIgnoreCase("increase")){
             this.numberOfBookings += 1;
-        } else if (order.equals("decrease")) {
+        } else if (order.equalsIgnoreCase("decrease")) {
             if(this.isFilled){
                 this.fitnessActivity.addLesson(this);
             }

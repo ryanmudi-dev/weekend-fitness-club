@@ -21,7 +21,7 @@ public class CalendarManager implements Serializable {
     private final FitnessActivity zumba = new FitnessActivity("Zumba", 35);
     private final FitnessActivity aquacise = new FitnessActivity("Aquacise", 25);
 
-    private HashMap<Integer, ArrayList<Lesson>> lessonsByMonth;
+    private final HashMap<Integer, ArrayList<Lesson>> lessonsByMonth;
 
     /**
      * Returns the list of all lessons sorted by month
@@ -135,7 +135,11 @@ public class CalendarManager implements Serializable {
      * @param day the day to search for available lessons (either "Saturday" or "Sunday")
      * @return an ArrayList of Lesson objects representing the available lessons on the specified day
      */
-    public ArrayList<Lesson> getAvailableLessons(String day){
+    public ArrayList<Lesson> getAvailableLessons(String day) throws IllegalArgumentException {
+        if (!day.equals("Saturday") && !day.equals("Sunday")) {
+            throw new IllegalArgumentException("Invalid day argument");
+        }
+
         ArrayList<Lesson> availableLessons = new ArrayList<>();
         if(day.equals("Saturday")){
             for (ArrayList<Lesson> currentMonth : this.lessonsByMonth.values()) {
@@ -145,7 +149,7 @@ public class CalendarManager implements Serializable {
                     }
                 }
             }
-        } else if (day.equals("Sunday")){
+        } else {
             for (ArrayList<Lesson> currentMonth : this.lessonsByMonth.values()) {
                 for (Lesson currentLesson : currentMonth) {
                     if (Integer.parseInt(currentLesson.getDateSlot().substring(4, 6)) == 2 && !currentLesson.isFilled()) {
@@ -159,19 +163,19 @@ public class CalendarManager implements Serializable {
     }
 
 
+
     /**
-
      This method retrieves a list of available lessons for a given FitnessActivity.
-
      It first retrieves the available lessons for the FitnessActivity by calling its getAvailableLessons() method,
-
      then loops through each month's lessons and adds any unfilled lessons to an ArrayList of available lessons.
-
      @param fitnessActivity the FitnessActivity for which to retrieve available lessons
-
      @return an ArrayList of Lesson objects representing the available lessons for the given FitnessActivity
      */
-    public ArrayList<Lesson> getAvailableLessons(FitnessActivity fitnessActivity){
+    public ArrayList<Lesson> getAvailableLessons(FitnessActivity fitnessActivity) throws IllegalArgumentException {
+        if (fitnessActivity == null) {
+            throw new IllegalArgumentException("FitnessActivity cannot be null");
+        }
+
         ArrayList<Lesson> availableLessons = new ArrayList<Lesson>();
         HashMap<Integer, ArrayList<Lesson>> availableLessonsByMonths = fitnessActivity.getAvailableLessons();
         for(ArrayList<Lesson> currentMonthLessons : availableLessonsByMonths.values()){
@@ -184,6 +188,7 @@ public class CalendarManager implements Serializable {
 
         return availableLessons;
     }
+
 
     /**
 

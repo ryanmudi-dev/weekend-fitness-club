@@ -50,17 +50,24 @@ public class CustomersManager implements Serializable{
      * @return true if the customer was successfully registered, false otherwise
      */
     public boolean registerNewCustomer(String firstName, String lastName, String emailAddress){
+        if (firstName == null || firstName.trim().isEmpty() ||
+                lastName == null || lastName.trim().isEmpty() ||
+                emailAddress == null || emailAddress.trim().isEmpty()) {
+            // Invalid input, one or more fields are missing or empty
+            return false;
+        }
+
         String firstNameTitle = firstName.substring(0,1).toUpperCase() + firstName.substring(1);
         String lastNameTitle = lastName.substring(0,1).toUpperCase() + lastName.substring(1);
         Customer newCustomer = new Customer(firstNameTitle + " " + lastNameTitle, emailAddress);
         String customerKey = emailAddress.toLowerCase();
         if(this.customers.containsKey(customerKey)){
+            // Customer with this email already exists
             return false;
         }else{
             this.customers.put(customerKey, newCustomer);
             return true;
         }
-
     }
 
     /**
