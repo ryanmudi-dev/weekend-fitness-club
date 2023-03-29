@@ -429,7 +429,7 @@ public class AppManager implements Serializable {
      If the user selects to exit the app, the method calls the exitApp method.
      @throws IOException If there is an error with the input/output of the program.
      */
-    public void fullApp() throws IOException {
+    public void startWFCApp() throws IOException {
         Scanner mainScanner = new Scanner(System.in);
 
         System.out.println("-----------------Weekend Fitness Club-----------------\n");
@@ -480,7 +480,7 @@ public class AppManager implements Serializable {
                 } while ((mainUserResponse < 1 || mainUserResponse > 12) && mainUserResponse != -1);
 
                 if (mainUserResponse == -1) {
-                    this.fullApp();
+                    this.startWFCApp();
                 }
                 if (tempSave == 3) {
                     String report = reportManager.getMonthlyLessonReport(mainUserResponse);
@@ -507,7 +507,7 @@ public class AppManager implements Serializable {
 
             } while (tempcontinue);
             System.out.println();
-            fullApp();
+            startWFCApp();
 
         } else {
             if (mainUserResponse == 1) {
@@ -542,7 +542,7 @@ public class AppManager implements Serializable {
 
             } else if (customerResponse == -1) {
                 this.setCurrentCustomer(null);
-                this.fullApp();
+                this.startWFCApp();
             }
 
             this.appLogicExtension(customerResponse);

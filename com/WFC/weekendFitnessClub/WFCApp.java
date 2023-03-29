@@ -34,7 +34,6 @@ public class WFCApp implements Serializable {
         }
 
         /*----------------------------Run Full App Logic---------------*/
-        appManager.fullApp();
+        appManager.startWFCApp();
     }
 }
-
