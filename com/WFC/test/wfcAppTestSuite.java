@@ -1,5 +1,4 @@
-package com.WFC.weekendFitnessClub;
-
+import com.WFC.weekendFitnessClub.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
