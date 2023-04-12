@@ -1,6 +1,5 @@
 package com.WFC.weekendFitnessClub;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -10,7 +9,7 @@ import java.util.HashMap;
  This class implements Serializable interface to enable objects of this class to be serialized.
  */
 
-public class FitnessActivity implements Serializable {
+public class FitnessActivity {
     private final String activityName; // the name of the fitness activity
     private final float price; // the price of the fitness activity
     private final HashMap<Integer, ArrayList<Lesson>> availableLesson; // a HashMap containing available lessons for the fitness activity

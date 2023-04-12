@@ -1,9 +1,8 @@
 package com.WFC.weekendFitnessClub;
 
-import java.io.Serializable;
 import java.util.HashMap;
 
-public class BookingManager implements Serializable {
+public class BookingManager {
     private final HashMap<String, Booking> bookingHashMap;
     private int lastBooking;
 

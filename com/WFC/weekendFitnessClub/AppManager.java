@@ -1,9 +1,5 @@
 package com.WFC.weekendFitnessClub;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -18,28 +14,18 @@ import java.util.Scanner;
  The class manages all User Interactions
  */
 
-public class AppManager implements Serializable {
-    transient Scanner scanner = new Scanner(System.in);
+public class AppManager {
+    Scanner scanner = new Scanner(System.in);
     CalendarManager calendarManager = new CalendarManager();
     BookingManager bookingManager = new BookingManager();
     CustomersManager customersManager = new CustomersManager();
     ReportManager reportManager = new ReportManager(calendarManager);
     private Customer currentCustomer = null;
-    private final static String filePath = "com/WFC/weekendFitnessClub/Serialization/appState.dat";
 
 
-    public AppManager() throws IOException {
+    public AppManager() {
     }
 
-
-    /**
-
-     Setter method to set the scanner object
-     @param scanner Scanner object to set
-     */
-    public void setScanner(Scanner scanner) {
-        this.scanner = scanner;
-    }
 
     /**
 
@@ -102,9 +88,8 @@ public class AppManager implements Serializable {
 
      This method allows the user to manage a specific booking by attending, modifying, or canceling it.
      @param booking the Booking object to be managed
-     @throws IOException If an I/O error occurs
      */
-    public void manageBooking(Booking booking) throws IOException {
+    public void manageBooking(Booking booking) {
         System.out.println("Enter An Option:\n[1] Attend Booking\n[2] Modify Booking\n[0] Exit App");
         int response = 100;
         try {
@@ -212,9 +197,8 @@ public class AppManager implements Serializable {
      @param responseView the user's response to the view options (1 for view by day of the week, 2 for view by fitness activity)
      @param calledFromWithin a boolean indicating whether the method was called from within itself
      @return the selected lesson
-     @throws IOException if an I/O error occurs
      */
-    public Lesson chooseLesson(int responseView, boolean calledFromWithin) throws IOException {
+    public Lesson chooseLesson(int responseView, boolean calledFromWithin) {
         // If calledFromWithin is true, prompt the user to select a view option
         if (calledFromWithin){
             System.out.println("Please select how you want to view the available lessons.\nEnter an Option\n[1] View by Day of the Week\n[2] View by Fitness Activity\n[-1] Go Back");
@@ -323,33 +307,15 @@ public class AppManager implements Serializable {
      Allows the current customer to book a lesson by registering a new booking in the booking manager.
      Prints out the new booking ID once the lesson is successfully booked.
      @param customerResponse the response received from the customer in choosing a lesson.
-     @throws IOException if an I/O error occurs.
      */
 
-    public void bookALesson(int customerResponse) throws IOException {
+    public void bookALesson(int customerResponse) {
         String newBookingID = this.bookingManager.registerBooking(this.currentCustomer, this.chooseLesson(customerResponse, false));
         System.out.println("Lesson Booked Successfully.\nYour New Booking ID is '" + newBookingID + "'\n");
         newBookingID = null;
     }
 
 
-    /**
-
-     Saves the current state of the WFC app to a file specified by the filePath field.
-     Uses object serialization to save the current state.
-     @throws IOException If an I/O error occurs while writing to the file.
-     */
-    public void saveWfcAppState() throws IOException{
-        try{
-            FileOutputStream fos = new FileOutputStream(filePath);
-            ObjectOutputStream oos = new ObjectOutputStream(fos);
-            oos.writeObject(this);
-            oos.close();
-            fos.close();
-        } catch(Exception e) {
-            System.out.println(e.getMessage());
-        }
-    }
 
 
     /**
@@ -359,9 +325,8 @@ public class AppManager implements Serializable {
      If the user types "Exit", the app will exit.
      If the email address entered is not associated with any registered user, the user will be prompted to enter a valid email address.
      Upon successful sign-in, sets the current customer to the returning customer and prints a welcome message.
-     @throws IOException If an I/O error occurs while getting customer information or exiting the app.
      */
-    public void signInRegisteredUser() throws IOException {
+    public void signInRegisteredUser() {
         Customer returningCustomer;
         do {
             boolean invalidEmail = true;
@@ -400,18 +365,16 @@ public class AppManager implements Serializable {
 
 
     /**
-     * Exits the application after saving the current state.
+     * Exits the application.
      *
-     * @throws IOException if there is an error while saving the state
      */
-    public void exitApp() throws IOException {
+    public void exitApp() {
         if (this.getCurrentCustomer() != null) {
             System.out.println("Thank you " + this.getCurrentCustomer().getCustomerName() + ", and hope you will be back soon");
             this.signOutCurrentUser();
         } else {
             System.out.println("Thank you, and hope you will be back soon");
         }
-        this.saveWfcAppState();
         System.exit(0);
     }
 
@@ -427,9 +390,8 @@ public class AppManager implements Serializable {
      If the user selects to book a new lesson or manage their current booking, the method will call the appLogicExtension method to handle the booking.
      If the user selects to sign out, the method sets the current customer to null and calls the fullApp method to display the menu again.
      If the user selects to exit the app, the method calls the exitApp method.
-     @throws IOException If there is an error with the input/output of the program.
      */
-    public void startWFCApp() throws IOException {
+    public void startWFCApp() {
         Scanner mainScanner = new Scanner(System.in);
 
         System.out.println("-----------------Weekend Fitness Club-----------------\n");
@@ -550,7 +512,7 @@ public class AppManager implements Serializable {
     }
     }
 
-    public void appLogicExtension(int customerResponse) throws IOException {
+    public void appLogicExtension(int customerResponse) {
 
             if (customerResponse == 1) {
                 int responseView = 100;

@@ -1,6 +1,5 @@
 package com.WFC.weekendFitnessClub;
 
-import java.io.Serializable;
 import java.text.DateFormatSymbols;
 import java.util.ArrayList;
 
@@ -10,7 +9,7 @@ import java.util.ArrayList;
  the number of bookings and attendance, the average rating and amount generated, and whether the lesson is filled or not.
  */
 
-public class Lesson implements Serializable {
+public class Lesson {
     private final FitnessActivity fitnessActivity;
     private final String dateSlot;
     final static int CAPACITY = 5;

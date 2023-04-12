@@ -1,7 +1,6 @@
 package com.WFC.weekendFitnessClub;
 
 
-import java.io.Serializable;
 import java.text.DateFormatSymbols;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,7 +11,7 @@ import java.util.HashMap;
  the fitness activities, and the schedule for each month.
  */
 
-public class CalendarManager implements Serializable {
+public class CalendarManager {
 
 
     //____________________________ Activities _____________________________________

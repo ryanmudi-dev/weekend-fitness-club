@@ -2,9 +2,6 @@
   <artifact type="jar" name="weekend-fitness-club:jar">
     <output-path>$PROJECT_DIR$/out/artifacts/weekend_fitness_club_jar</output-path>
     <root id="archive" name="weekend-fitness-club.jar">
-      <element id="directory" name="META-INF">
-        <element id="file-copy" path="$PROJECT_DIR$/../Prod/META-INF/MANIFEST.MF" />
-      </element>
       <element id="module-output" name="weekend-fitness-club" />
       <element id="extracted-dir" path="$PROJECT_DIR$/lib/junit-jupiter-5.8.1.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/lib/junit-jupiter-api-5.8.1.jar" path-in-jar="/" />

@@ -1,6 +1,5 @@
 package com.WFC.weekendFitnessClub;
 
-import java.io.Serializable;
 import java.text.DateFormatSymbols;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,7 +11,7 @@ import java.util.Objects;
  It contains methods to generate monthly lesson report and monthly champion fitness report.
  */
 
-public class ReportManager implements Serializable {
+public class ReportManager {
     private final CalendarManager calendarManager;
 
     /**

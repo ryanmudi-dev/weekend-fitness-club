@@ -1,6 +1,5 @@
 package com.WFC.weekendFitnessClub;
 
-import java.io.*;
 import java.util.HashMap;
 
 /**
@@ -9,7 +8,7 @@ import java.util.HashMap;
  This class implements Serializable interface to enable objects of this class to be serialized.
  */
 
-public class CustomersManager implements Serializable{
+public class CustomersManager {
     private HashMap<String, Customer> customers;
 
     /**

@@ -1,6 +1,5 @@
 package com.WFC.weekendFitnessClub;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -9,7 +8,7 @@ import java.util.ArrayList;
  A customer object has a name, email address, a list of booked lessons, and a list of all bookings.
  */
 
-public class Customer implements Serializable {
+public class Customer {
 
     private String customerName;
     private String customerEmailAddress;

@@ -3,9 +3,8 @@ package com.WFC.weekendFitnessClub;
 /**
  * Represents a booking made by a customer for a lesson at the Weekend Fitness Club.
  */
-import java.io.Serializable;
 
-public class Booking implements Serializable {
+public class Booking {
     private String bookingId;
     private Customer customer;
     private Lesson lesson;

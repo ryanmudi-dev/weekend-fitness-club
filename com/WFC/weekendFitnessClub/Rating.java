@@ -1,13 +1,11 @@
 package com.WFC.weekendFitnessClub;
 
-import java.io.Serializable;
-
 /**
 
  The Rating class represents a rating given by a user, which includes a numerical score and an optional review.
  */
 
-public class Rating implements Serializable {
+public class Rating {
     private String review;
     private int rating;
 
